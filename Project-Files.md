@@ -88,7 +88,7 @@ This function takes no parameters.
 This command clones the tracked project repository into a given directory.
 
 NOTE: this command currently only supports clone over SSH.
-Make sure your keys are set up //TODO
+Make sure your GitHub ssh keys are set up in your target distros.
 
 ```yaml
 - command: git.get_project
@@ -165,9 +165,9 @@ The format is as follows:
         "status":"pass",
             "test_file":"test_1",
             "exit_code":0,
-            "elapsed":0.32200002670288086, //start - end
-            "start":1398782500.359, //epoch time
-            "end":1398782500.681 //epoch time
+            "elapsed":0.32200002670288086, //end-start
+            "start":1398782500.359, //epoch_time
+            "end":1398782500.681 //epoch_time
     },
     {
         "etc":"..."
@@ -314,8 +314,23 @@ functions:
 ```
 They can be used anywhere a command can be used.
 
-Functions can also optionally take arguments, in the form of.
-
+Functions can also optionally take arguments, in the form of
+```yaml
+- func: "run a function with an arg"
+  vars:
+    foobar: "TESTING"
+```
+These are handled as normal expansions within the function definition.
+That is, in the definition of `"run a function with an arg"` above, we can use the `foobar` parameter by writing
+```yaml
+functions:
+  "run a function with an arg":
+    command: shell.exec
+    params:
+      working_dir: src
+      script: |
+        echo "I was called with ${foobar}"
+```
 
 ### The Power of YAML
 YAML as a format has some built-in support for defining variables and using them.

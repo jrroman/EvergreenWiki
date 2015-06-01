@@ -76,14 +76,14 @@ where the fields are crowd manager credentials.
 
 Finally, for access control, Evergreen has the concept of a "superuser."
 Superusers are able to add and modify projects and distros within the Evergreen UI.
-Superusers are configured in with the field
+Superusers are set by using the field
 ```yaml
 superusers: ["name1", "name2", "name3"]
 ```
 in the root of the config file. 
 If the `superusers` field does not exist, all logged in users will have superuser privileges.
 
-######Distros
+#####Distros
 
 A "distro" in Evergreen is a host configuration that projects can run against.
 Distros tell Evergreen how to create and talk to hosts of a certain type.
@@ -93,23 +93,36 @@ or she might create a distro `osx-buildfarm` for running tasks on some static OS
 Evergreen supports both elastic and static computing.
 Please check out one or both of the following tutorials before continuing:
 
-For information on configuring a cloud provider along with an Amazon ec2 tutorial, click [here](TODO)
+For information on configuring a cloud provider along with an Amazon ec2 tutorial, click [here](TODO).
 
-For information on configuring a static provider along with a "localhost" tutorial, click [here](TODO)
+For information on configuring a static provider along with a "localhost" tutorial, click [here](TODO).
 
-######Projects
+#####Projects
 
 Finally, Evergreen needs to know what codebases to test.
 Evergreen project configuration is done almost entirely within the repository you are testing.
-For more information on writing a project config for your repo, click [here]()
+For more information on writing a project config for your repo, click [here](https://github.com/evergreen-ci/evergreen/wiki/Project-Files).
 
-For the purposes of this tutorial, we will be testing this sample project: TODO
+For the purposes of this tutorial, we will be testing this sample project: https://github.com/evergreen-ci/sample
 
 On the projects page, add a new project, and fill in the required fields to point it to this test repository.
-You shouldn't have to add any special expansions or anything. 
-Click save changes.
+( We recommend project names be simple and not have spaces, as it makes the command line tools easier to use;
+save capital letters and spaces for the project's Display Name)
 
-NOTE: In our 0.9.0 alpha release, the UI Server must be restarted for project updates to be reflected in the UI.
+[[images/project_setup.png]]
+#######Project Parameters
+ * `Enabled/Disabled`: disabling a project stops it from scheduling and running new tasks
+ * `Display Name`: how you want the project to be written in the UI (e.g. "My Project")
+ * `Config File`: location of project file in the target repository (e.g. "evergreen.yml")
+ * `Batch Time`: how many minutes to wait between scheduling new commits (e.g. 120)
+ * `Owner`: the GitHub owner of a project (e.g. "mongodb")
+ * `Repo Name`: the GitHub repository name (e.g. "mongo-tools")
+
+The variables section let's you define project-level expansions. 
+You shouldn't have to add any special variables to run the sample repository.
+Click Save Changes.
+
+NOTE: In our 0.9.0 alpha release, the UI Server must be restarted for project updates to be reflected in the UI dropdown.
 This will change very soon.
 
 Make sure your runner and API servers are active, and sit back to watch your tests run.
