@@ -157,7 +157,24 @@ Parameters:
 ####attach.results
 This command parses results in Evergreen's JSON test result format and posts them to the API server.
 
-//TODO: outline format
+The format is as follows:
+```json
+{
+    "results":[
+    {
+        "status":"pass",
+            "test_file":"test_1",
+            "exit_code":0,
+            "elapsed":0.32200002670288086, //start - end
+            "start":1398782500.359, //epoch time
+            "end":1398782500.681 //epoch time
+    },
+    {
+        "etc":"..."
+    },
+    ]
+}
+```
 
 ```yaml
 - command: attach.results
