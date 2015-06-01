@@ -264,8 +264,44 @@ timeout:
 Expansions are variables within your config file. 
 They take the form `${key_name}` within your project,
 and are defined on a project-wide level on the project configuration page or on a build variant level within in the project.
-//TODO
+They can be used an inputs to commands, including shell scripts.
+```yaml
+command: s3.get
+   params:
+     aws_key: ${aws_key}
+     aws_secret: ${aws_secret}
+```
 
+Expansions can also take default arguments, in the form of `${key_name|default}`.
+```yaml
+ command: shell.exec
+    params:
+      working_dir: src
+      script: |
+        if [ ${has_pyyaml_installed|false} = false ]; then 
+        ...
+```
+If an expansion is used in your project file, but is unset, it will be replaced with its default value.
+If there is no default value, the empty string will be used.
 
 ### Functions
+Functions offer a way to share commands across task definitions.
+Functions are defined as follows:
+```yaml
+functions:
+  "function name" :
+    - command: my.command
+    - command: my.command2
+  "function name 2":
+     command: single-command-not-in-a-list
+```
+They can be used anywhere a command can be used.
+
+Functions can also optionally take arguments, in the form of.
+
+
 ### The Power of YAML
+YAML as a format has some built-in support for defining variables and using them.
+You might notice the use of node anchors and references in some of our project code.
+For a quick example, see: http://en.wikipedia.org/wiki/YAML#Reference 
+
