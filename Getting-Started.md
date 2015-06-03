@@ -11,7 +11,7 @@ In the current release, Go 1.4, cross compilation requires installing Go from so
 
 #####Install MongoDB
 Evergreen was built by the developers of MongoDB, so it's no surprise that Evergreen relies on MongoDB for all of its back-end storage needs.
-Instructions on install MongoDB are [here](http://http://docs.mongodb.org/manual/installation/).
+Instructions on install MongoDB are [here](http://docs.mongodb.org/manual/installation/).
 
 #####Clone the Repo
 Clone the `evergreen-ci/evergreen` repo using git.
