@@ -45,3 +45,43 @@ runner:
 ```
 Lowering this number will make evergreen run more frequently, with the risk of more lock contention from the API server.
 
+##### API Settings
+There is a slight quirk to API configuration in `0.9.0`.
+In your settings file, there is a root options called `motu`. 
+MOTU stands for "master of the universe", and is a holdover from the early days of Evergreen.
+In the config, `motu` is the address of the API server.
+It is the address that agents communicate with once they are running on their respective hosts.
+It could look like
+```yaml
+motu: "http://localhost:8080"
+```
+for a totally local Evergreen deployment, or something more like
+```yaml
+motu: "http://evergreen.mycompany.com:8080"
+```
+
+The rest of the API config is handled in the `api` field. 
+```yaml
+    logfile: "path/to/api.log"
+    httplistenaddr: ":8080"
+    httpslistenaddr: ":8443"
+    httpskey: |
+        -----BEGIN RSA PRIVATE KEY-----
+        paste a key here if you want https communication between agents and the API server
+        -----END RSA PRIVATE KEY-----
+```
+
+##### UI Settings
+These settings control the Evergreen web interface.
+```yaml
+ui:
+    logfile: "path/to/ui.log"
+    secret: "here is my secret"
+    cachetemplates: true
+    defaultproject: "mongodb-mongo-master"
+    url: "http://evergreen.mycompany.com"
+    helpurl: "https://urlforhelp"
+    httplistenaddr: ":9090"
+```
+
+
