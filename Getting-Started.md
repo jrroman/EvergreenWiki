@@ -38,6 +38,7 @@ making Evergreen setup easy and well-documented is the main goal driving our 1.0
 
 Evergreen relies on a single server-side configuration file for application-wide settings. 
 To start, make a copy of the example config file [here](https://github.com/evergreen-ci/evergreen/blob/master/docs/evg_example_config.yml) and fill in the given GitHub tokens and SSH keys.
+See our [configuration wiki page](Configuration) for help with setting up your config file.
 If you are just trying Evergreen out, feel free to remove the https configuration options to simplify your deployment. 
 
 ######Users
