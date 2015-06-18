@@ -5,7 +5,14 @@ You can find a sample config with spaces for you to fill in [here](https://githu
 
 ### Fields
 ##### Database Connection
+These fields control which MongoDB instance Evergreen talks to.
+```yaml
+dburl: "mongodb://localhost:27017"
+db: "evg"
+```
+
 `dburl`: the MongoDB connection string to use.
+
 `db`: the MongoDB database to use.
 
 ##### Cloud Providers
@@ -84,4 +91,44 @@ ui:
     httplistenaddr: ":9090"
 ```
 
+`logfile`: file to write UI logs to
 
+`cachetemplates`: boolean, determines whether templates are re-parsed on every page load (turn this off for development work)
+
+`secret`: secret string for your cookies
+
+`defaultproject`: the default project to load up when a user first loads the main UI page
+
+`url`: the absolute URL of the UI server
+
+`helpurl`: use this to overwrite the help link, to point it somewhere other than the GitHub wiki
+
+`httplistenaddr`: the address for the UI server to listen on (in form of `:number`)
+
+
+##### Notification / E-mail
+These settings tell Evergreen how to send mail. 
+You deployment will run if these are unset, but you won't be notified of system errors if email is not set up.
+```yaml
+notify:
+    smtp:
+        from: "name@yourdomain.com"
+        server: "localhost"
+        port: 25
+        use_ssl: false
+        admin_email:
+        - test@test.test
+```
+`smtp.from`: the address to send e-mail from
+
+`smtp.server`: the address of your SMTP server
+
+`smtp.port`: the port of your SMTP server
+
+`smtp.use_ssl`: boolean, tells the SMTP server to communicate with SSL
+
+`smtp.admin_email`: a list of addresses to send notifications to if Evergreen processes crash or error in some way
+
+
+##### Expansion
+Coming Soon.
