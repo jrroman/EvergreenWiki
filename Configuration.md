@@ -130,5 +130,14 @@ notify:
 `smtp.admin_email`: a list of addresses to send notifications to if Evergreen processes crash or error in some way
 
 
-##### Expansion
-Coming Soon.
+##### Expansions
+You can use this section to specify parameters for use in distro setup scripts or tasks. 
+```yaml
+expansions: 
+    github_private_key: |-
+        -----BEGIN RSA PRIVATE KEY-----
+        Your private key to copy over to machines you spin up,
+        so that they can talk to GitHub with ssh.
+        -----END RSA PRIVATE KEY-----
+```
+Expansions are defined in simple `key: value` yaml syntax.
