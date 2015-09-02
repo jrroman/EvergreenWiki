@@ -62,7 +62,7 @@ Next, click the `+ ADD HOST` button, and fill in the name of the machine to use.
 In this example, you should fill in `localhost`, `127.0.0.1`, or the name of your local machine.
 
 
-[[images/provider.png]]
+[[images/static_provider.png]]
 
 ###### User
 Fill this is with your machine user.
