@@ -26,16 +26,18 @@ keys:
 You will probably want to restart your UI server to make sure the `keys` changes to the Evergreen config file to take effect.
 
 ###### GitHub
-Currently, Evergreen can only access GitHub over ssh, so your user will also need to be configured to accept your user's primary SSH key.
-Follow the instructions at https://help.github.com/articles/generating-ssh-keys/ for detailed instructions.
+Currently, Evergreen can only access GitHub over ssh, so your GitHub will also need to be configured to accept your user's primary SSH key.
+Follow the instructions at https://help.github.com/articles/generating-ssh-keys/ for full details.
 
 ### Evergreen Configuration
 Now the fun part: let's tell Evergreen how to actually use your local machine.
 To set up a distro, navigate to the user dropdown in the top right and select `Distros`. (TODO - image)
 On the distros page, click the big, green button reading `+ NEW DISTRO` and fill in the following fields.
+[[images/new_distro.png]]
 
 ###### Identifier
 This field is how project configuration files will tell Evergreen which distro to run a variant on. In this example, set the identifier to `localtestdistro`.
+[[images/static_id.png]]
 
 
 ###### Agent Architecture
@@ -43,6 +45,7 @@ Use the dropdown to select the architecture of your current machine.
 
 For Working Directory, we need to establish a path that your localhost user has permissions to write to.
 This directory will be created at host startup and is where the Evergreen agent will run and store files.
+[[images/static_agent.png]]
 
 
 ###### Provider
@@ -51,12 +54,14 @@ This tells Evergreen that we are using an existing machine with a known address,
 
 Next, click the `+ ADD HOST` button, and fill in the name of the machine to use.
 In this example, you should fill in `localhost`, `127.0.0.1`, or the name of your local machine.
+[[images/provider.png]]
 
 ###### User
 Fill this is with your machine user.
 Evergreen will SSH as this user into the machine you listed above in "Provider."
 
 Now select the SSH Key we set up earlier in the dropdown.
+[[images/static_user.png]]
 
 ###### Finally
 
