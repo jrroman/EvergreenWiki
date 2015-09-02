@@ -3,22 +3,22 @@
 In its current alpha state, installing evergreen can be a confusing process.
 Rest assured that once it is up and running, there will be very little configuration and maintenance for the end user.
 
-###Requirements
+##Requirements
 
 #####Install Go From Source
 One of Evergreen's most defining features is its reliance on Go's cross compilation support.
 In the current release, Go 1.4, cross compilation requires installing Go from source, which you can do by following the instructions [here](https://golang.org/doc/install/source).
 
-#####Install MongoDB
+####Install MongoDB
 Evergreen was built by the developers of MongoDB, so it's no surprise that Evergreen relies on MongoDB for all of its back-end storage needs.
 Instructions on install MongoDB are [here](http://docs.mongodb.org/manual/installation/).
 
-#####Clone the Repo
+####Clone the Repo
 Clone the `evergreen-ci/evergreen` repo using git.
 
 We rely on internal vendoring for all of our packages, so there's no need to use `go get` in order to get a copy.
 
-#####Build
+####Build
 
 Compiling the main Evergreen processes is done by simply running `./build.sh`, which will compile them into the `bin` directory.
 
@@ -28,13 +28,13 @@ You must then run `go run vendor/src/github.com/laher/goxc/goxc.go -t` to set up
 After this is done, run `./build_agent.sh`, which will compile the agent for all of our supported platforms.
 
 
-###Configure and Run
+##Configure and Run
 
 Now the fun part.
 If any of these directions are confusing or don't seem to work, please [file a GitHub issue](https://github.com/evergreen-ci/evergreen/issues) for this repo;
 making Evergreen setup easy and well-documented is the main goal driving our 1.0.0 beta release.
 
-#####Config Files
+####Config Files
 
 Evergreen relies on a single server-side configuration file for application-wide settings. 
 To start, make a copy of the example config file [here](https://github.com/evergreen-ci/evergreen/blob/master/docs/evg_example_config.yml) and fill in the given GitHub tokens and SSH keys.
@@ -84,6 +84,18 @@ superusers: ["name1", "name2", "name3"]
 in the root of the config file. 
 If the `superusers` field does not exist, all logged in users will have superuser privileges.
 
+#### The Evergreen Processes
+Running `build.sh` will generate binaries for `evergreen_ui_server`, `evergreen_api_server`, and `evergreen_runner`. 
+Once your config file is in order, you start these processes *from the root of the evergreen git repository* with
+```bash
+export EVGHOME=`pwd`
+bin/evergreen_ui_server -conf path/to/config.yml
+bin/evergreen_api_server -conf path/to/config.yml
+bin/evergreen_runner -conf path/to/config.yml
+```
+
+With these processes running, you can continue setting up your distros and projects through the Evergreen UI.
+
 #####Distros
 
 A "distro" in Evergreen is a host configuration that projects can run against.
@@ -94,9 +106,9 @@ or she might create a distro `osx-buildfarm` for running tasks on some static OS
 Evergreen supports both elastic and static computing.
 Please check out one or both of the following tutorials before continuing:
 
-For information on configuring a cloud provider along with an Amazon ec2 tutorial, click [here](TODO).
+For information on configuring a cloud provider along with an Amazon ec2 tutorial, click [here](https://github.com/evergreen-ci/evergreen/wiki/Static-Tutorial).
 
-For information on configuring a static provider along with a "localhost" tutorial, click [here](TODO).
+For information on configuring a static provider along with a "localhost" tutorial, click [here](TODO) (TODO).
 
 #####Projects
 
@@ -128,7 +140,7 @@ This will change very soon.
 
 Make sure your runner and API servers are active, and sit back to watch your tests run.
 
-######Common pitfalls:
+#####Common pitfalls:
 
 - firewalls and security groups
 - knownhosts
