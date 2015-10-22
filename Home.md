@@ -1,5 +1,5 @@
 #Evergreen
-Evergreen is a homebrew continuous integration system built by MongoDB.
+Evergreen is a continuous integration system built by MongoDB.
 It utilizes multi-platform cloud computing to run tests as quickly as possible on as many platforms as possible.
 
 ###Features
@@ -9,7 +9,7 @@ When there are lots of commits coming in, Evergreen can spin up new hosts to run
 Use only what you need.
 
 #####Multiplatform Support
-Evergreen is built in Go, an awesome new systems programming from Google.
+Evergreen is built in Go, an awesome new programming language from Google.
 Your tests can run on any machine that Evergreen can cross-compile its agent for, so it can run on all of Go's myriad supported operating systems and architectures, including
  1. Linux
  2. OSX
@@ -20,7 +20,7 @@ Your tests can run on any machine that Evergreen can cross-compile its agent for
 on x86, amd64, and arm architectures.
 
 #####Precise, Actionable Feedback
-No more guessing about who broken what.
+No more guessing about who broke what.
 By Default, Evergreen does not run every commit; however, in the event that something breaks, Evergreen will run failing tasks on previous commits to find the commit that caused the failure.
 Think of it like a built-in `git bisect`.
 
@@ -40,7 +40,7 @@ Projects are defined with simple yaml config files, see [here](https://github.co
 ###How It Works
 Evergreen monitors a set of github repositories, waiting for new commits.
 When a new commit comes in or enough time has passed, Evergreen schedules builds for different variants (different OSes, compile flags, etc).
-Once builds are scheduled, an internal heuristic decides how many cloud machines to allocate in order to get tests done and quickly and cheaply as possible.
+Once builds are scheduled, an internal heuristic decides how many cloud machines to allocate in order to get tests done as quickly and cheaply as possible.
 
-Evergreen sends a executable agent binary to each test machine, which begins running its given task.
+Evergreen sends an executable agent binary to each test machine, which begins running its given task.
 Logs are streamed back to the main server, along with system statistics and formatted test results.
