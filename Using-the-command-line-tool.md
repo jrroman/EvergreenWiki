@@ -6,20 +6,49 @@ How to set up and use the command-line tool
 Downloading the binaries
 --
 
-Go to your evergreen user settings page (at /settings) to find links to download the binaries, if the server admin has made them available.
+Go to your evergreen user settings page (accessible the drop-down in the upper right, or at `/settings`) to find links to download the binaries, if the server admin has made them available.
 
 Basic Usage
 --
 
 * To submit a patch, run this from your local copy of the mongodb/mongo repo:
-
-      `evergreen patch -p <project-id>`
+```bash
+evergreen patch -p <project-id>`
+```
     
-NOTE: The first time you run this, you'll be asked if you want to set these as your default project and variants.
+Variants and tasks for a patch can be specified with the `-v` and `-t`:
+```bash
+evergreen -v enterprise-suse11-64 -t compile
+```
+
+Multiple tasks and variants are specified by passing the flags multiple times:
+```bash
+evergreen -v enterprise-suse11-64 -v solaris-64-bit -t compile -t unittest -t jsCore
+```
+
+And _every_ task or variant can be specified by using the "all" keywork:
+```bash
+evergreen -v all -t all
+```
+
+*NOTE:* The first time you run a patch, you'll be asked if you want to set the given parameters as your default project and variants.
 After setting defaults, you can omit the flags and the default values will be used, so that just running `evergreen patch` will work.
 
 Defaults may be changed at any time by editing your `~/.evergreen.yml` file.
 
+
+Advanced Patch Tips
+--
+
+#####Multiple Defaults
+While the `evergreen` program has no built-in method of saving multiple configurations of defaults for a project, you can easily mimic this functionality by using multiple local evergreen configurations.
+The command line tool allows you to pass in a specifc config file with `--config`:
+```bash
+evergreen --config ~/.many_compiles.yml patch
+```
+You can use this feature, along with shell aliasing, to easily manage multiple default sets.
+
+#####Git Diff
 Extra args to the `git diff` command used to generate your patch may be specified by appending them after `--`.  For example, to generate a patch relative to the previous commit:
 
       evergreen patch -- HEAD~1
@@ -27,6 +56,7 @@ Extra args to the `git diff` command used to generate your patch may be specifie
 Or to patch relative to a specific tag:
 
       evergreen patch -- r3.0.2
+
 
 Operating on existing patches
 --
@@ -53,7 +83,7 @@ Operating on existing patches
       evergreen set-module -i <patch_id> -m <module-name>
       ```
 
-### Server Side (for evergreen admins)
+### Server Side (for Evergreen admins)
 
 To enable auto-updating of client binaries, add a section like this to the settings file for your server:
 
@@ -71,7 +101,7 @@ api:
              url: "https://.../evergreen"
            - os: "windows"
              arch: "amd64"
-             url: "https://.../evergreen"
+             url: "https://.../evergreen.exe"
 ```
 
 The "url" keys in each list item should contain the appropriate URL to the binary for each architecture. The "latest_revision" key should contain the githash that was used to build the binary. It should match the output of "evergreen version" for *all* the binaries at the URLs listed in order for auto-updates to be successful.
