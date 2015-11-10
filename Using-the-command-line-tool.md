@@ -11,24 +11,24 @@ Go to your evergreen user settings page (accessible the drop-down in the upper r
 Basic Usage
 --
 
-* To submit a patch, run this from your local copy of the mongodb/mongo repo:
+To submit a patch, run this from your local copy of the mongodb/mongo repo:
 ```bash
 evergreen patch -p <project-id>`
 ```
     
 Variants and tasks for a patch can be specified with the `-v` and `-t`:
 ```bash
-evergreen -v enterprise-suse11-64 -t compile
+evergreen patch -v enterprise-suse11-64 -t compile
 ```
 
 Multiple tasks and variants are specified by passing the flags multiple times:
 ```bash
-evergreen -v enterprise-suse11-64 -v solaris-64-bit -t compile -t unittest -t jsCore
+evergreen patch -v enterprise-suse11-64 -v solaris-64-bit -t compile -t unittest -t jsCore
 ```
 
 And _every_ task or variant can be specified by using the "all" keywork:
 ```bash
-evergreen -v all -t all
+evergreen patch -v all -t all
 ```
 
 *NOTE:* The first time you run a patch, you'll be asked if you want to set the given parameters as your default project and variants.
