@@ -26,7 +26,7 @@ Multiple tasks and variants are specified by passing the flags multiple times:
 evergreen patch -v enterprise-suse11-64 -v solaris-64-bit -t compile -t unittest -t jsCore
 ```
 
-And _every_ task or variant can be specified by using the "all" keywork:
+And _every_ task or variant can be specified by using the "all" keyword:
 ```bash
 evergreen patch -v all -t all
 ```
@@ -42,11 +42,47 @@ Advanced Patch Tips
 
 #####Multiple Defaults
 While the `evergreen` program has no built-in method of saving multiple configurations of defaults for a project, you can easily mimic this functionality by using multiple local evergreen configurations.
-The command line tool allows you to pass in a specifc config file with `--config`:
+The command line tool allows you to pass in a specific config file with `--config`:
 ```bash
 evergreen --config ~/.many_compiles.yml patch
 ```
-You can use this feature, along with shell aliasing, to easily manage multiple default sets.
+You can use this feature along with shell aliasing to easily manage multiple default sets.
+
+For example, an enterprising server engineer might create a config file called `tests.yml` with the content
+```yaml
+api_server_host:#api
+ui_server_host: #ui
+api_key: #apikey
+user: #user
+projects:
+- name: mongodb-mongo-master
+  variants:
+  - windows-64-2k8-debug
+  - enterprise-rhel-62-64-bit
+  tasks:
+  - all
+```
+so that running `evergreen --config tests.yml patch` defaults to running all tasks for those two variants.
+
+You might also want to create a config called `compile.yml` with
+```yaml
+api_server_host:#api
+ui_server_host: #ui
+api_key: #apikey
+user: #user
+projects:
+- name: mongodb-mongo-master
+  variants:
+  - windows-64-2k8-debug
+  - enterprise-rhel-62-64-bit
+  - solaris-64-bit
+  - enterprise-osx-108 #and so on...
+  tasks:
+  - compile
+  - unittests
+```
+for running basic compile/unit tasks for a variety of platforms with `evergreen --config compile.yml patch`.
+This setup also makes it easy to do scripting for nice, automatic patch generation.
 
 #####Git Diff
 Extra args to the `git diff` command used to generate your patch may be specified by appending them after `--`.  For example, to generate a patch relative to the previous commit:
