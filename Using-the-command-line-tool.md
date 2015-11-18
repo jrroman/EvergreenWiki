@@ -93,26 +93,33 @@ Or to patch relative to a specific tag:
 
       evergreen patch -- r3.0.2
 
+Though keep in mind that the merge base must still exist in the canonical GitHub repository so that Evergreen can apply the patch.
+
+
+The `--` feature can also be used to pass flags to `git diff`.
+One common use of this is to pass the `--binary` flag to enable patches with binary files, which can come up when checking in external libraries or tests with .bson data.
+
+      evergreen patch -- --binary --full-index
+
 
 Operating on existing patches
 --
 
-
-* To list patches you've created:
+To list patches you've created:
 
       `evergreen list-patches`
 
 
-* To cancel a patch:
+To cancel a patch:
  
 	  `evergreen cancel-patch -i <patch_id>`
     
-* To finalize a patch:
+To finalize a patch:
  
       `evergreen finalize-patch -i <patch_id>`
 
 
-* To add changes to a module on top of an existing  patch:
+To add changes to a module on top of an existing  patch:
 
      ```
       cd ~/projects/module-project-directory
