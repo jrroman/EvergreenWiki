@@ -1,8 +1,6 @@
 How to set up and use the command-line tool
 ==
 
-###Client
-
 Downloading the binaries
 --
 
