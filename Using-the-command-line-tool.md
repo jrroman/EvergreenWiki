@@ -50,7 +50,7 @@ You can use this feature along with shell aliasing to easily manage multiple def
 
 For example, an enterprising server engineer might create a config file called `tests.yml` with the content
 ```yaml
-api_server_host:#api
+api_server_host: #api
 ui_server_host: #ui
 api_key: #apikey
 user: #user
@@ -66,7 +66,7 @@ so that running `evergreen --config tests.yml patch` defaults to running all tas
 
 You might also want to create a config called `compile.yml` with
 ```yaml
-api_server_host:#api
+api_server_host: #api
 ui_server_host: #ui
 api_key: #apikey
 user: #user
