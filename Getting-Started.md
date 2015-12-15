@@ -96,23 +96,9 @@ bin/evergreen_runner -conf path/to/config.yml
 
 With these processes running, you can continue setting up your distros and projects through the Evergreen UI.
 
-#####Distros
-
-A "distro" in Evergreen is a host configuration that projects can run against.
-Distros tell Evergreen how to create and talk to hosts of a certain type.
-For example, a user might create a distro called `ubuntu` for spinning up ubuntu instances on ec2,
-or she might create a distro `osx-buildfarm` for running tasks on some static OSX machines in her server room.
-
-Evergreen supports both elastic and static computing.
-Please check out one or both of the following tutorials before continuing:
-
-For information on configuring a cloud provider along with an Amazon ec2 tutorial, click [here](https://github.com/evergreen-ci/evergreen/wiki/Static-Tutorial).
-
-For information on configuring a static provider along with a "localhost" tutorial, click [here](TODO) (TODO).
-
 #####Projects
 
-Finally, Evergreen needs to know what codebases to test.
+First, Evergreen needs to know what codebases to test.
 Evergreen project configuration is done almost entirely within the repository you are testing.
 For more information on writing a project config for your repo, click [here](https://github.com/evergreen-ci/evergreen/wiki/Project-Files).
 
@@ -135,10 +121,22 @@ The variables section let's you define project-level expansions.
 You shouldn't have to add any special variables to run the sample repository.
 Click Save Changes.
 
-NOTE: In our 0.9.0 alpha release, the UI Server must be restarted for project updates to be reflected in the UI dropdown.
-This will change very soon.
+#####Distros
 
-Make sure your runner and API servers are active, and sit back to watch your tests run.
+Next, Evegreen needs to know where to run your tests.
+A "distro" in Evergreen is a host configuration that projects can run against.
+Distros tell Evergreen how to create and talk to hosts of a certain type.
+For example, a user might create a distro called `ubuntu` for spinning up ubuntu instances on ec2,
+or she might create a distro `osx-buildfarm` for running tasks on some static OSX machines in her server room.
+
+Evergreen supports both elastic and static computing.
+Please check out one or both of the following tutorials before continuing:
+
+For information on configuring a cloud provider along with an Amazon ec2 tutorial, click [here](TODO). (TODO)
+
+For information on configuring a static provider along with a "localhost" tutorial, click [here](https://github.com/evergreen-ci/evergreen/wiki/Static-Tutorial).
+
+With a project and distro set up, make sure your runner and API servers are active, and sit back to watch your tests run.
 
 #####Common pitfalls:
 
