@@ -123,7 +123,7 @@ Click Save Changes.
 
 #####Distros
 
-Next, Evegreen needs to know where to run your tests.
+Next, Evergreen needs to know where to run your tests.
 A "distro" in Evergreen is a host configuration that projects can run against.
 Distros tell Evergreen how to create and talk to hosts of a certain type.
 For example, a user might create a distro called `ubuntu` for spinning up ubuntu instances on ec2,
