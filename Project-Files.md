@@ -370,6 +370,7 @@ variants:
     - osx-distro
     tasks:
     - ".frontend"
+    - ".js"
 
   # this variant does everything
 - name: ubuntu
