@@ -332,6 +332,101 @@ functions:
         echo "I was called with ${foobar}"
 ```
 
+### Task Tags
+Most projects have some implicit grouping at every layer.
+Some tests are integration tests, others unit tests; features can be related even if their tests are stored in different places.
+Evergreen provides an interface for manipulating tasks using this kind of reasoning through *tag selectors.*
+
+Tags are defined as an array as part of a task definition.
+Tags should be self-explanatory and human-readable.
+```yaml
+tasks:
+  # this task is an integration test of backend systems; it requires a running database
+- name: db
+  tags: ["integration", "backend", "db_required"]
+  commands:
+    - func: "do test"
+
+  # this task is an integration test of frontend systems using javascript
+- name: web_admin_page
+  tags: ["integration", "frontend", "js"]
+  commands:
+    - func: "do test"
+
+  # this task is an integration test of frontend systems using javascript
+- name: web_user_settings
+  tags: ["integration", "frontend", js]
+  commands:
+    - func: "do test"
+```
+
+Tags can be referenced in variant definitions to quickly include groups of tasks.
+```yaml
+variants:
+  # this project only does browser tests on OSX
+- name: osx
+    display_name: OSX
+    run_on:
+    - osx-distro
+    tasks:
+    - ".frontend"
+
+  # this variant does everything
+- name: ubuntu
+    display_name: Ubuntu
+    run_on:
+    - ubuntu-1440
+    tasks:
+    - "*"
+
+  # this experimental variant runs on a tiny computer and can't use a database or run browser tests
+- name: ubuntu_pi
+    display_name: Ubuntu Raspberry Pi
+    run_on:
+    - ubuntu-1440
+    tasks:
+    - "!.db_required !.frontend"
+```
+
+Tags can also be referenced in dependency definitions.
+```yaml
+tasks:
+  # this project only does long-running performance tests on builds with passing unit tests
+- name: performance
+  depends_on:
+  - ".unit"
+  commands:
+    - func: "do test"
+
+  # this task runs once performance and integration tests finish, regardless of the result
+- name: publish_binaries
+  depends_on:
+  - name: performance
+    status: *
+  - name: ".integration"
+    status: *
+```
+
+Tag selectors are used to define complex select groups of tasks based on user-defined tags.
+Selection syntax is currently defined as a whitespace-delimited set of criteria, where each criterion is a different name or tag with optional modifiers.
+Formally, we define the syntax as:
+  Selector := [whitespace-delimited list of Criterion]
+  Criterion :=  (optional ! rune)(optional . rune)<Name> or "*"
+    where "!" specifies a negation of the criteria and "." specifies a tag as opposed to a name
+  Name := <any string>
+    excluding whitespace, '.', and '!'
+
+Selectors return all items that satisfy all of the criteria.
+That is, they return the *set intersection* of each individual criterion.
+
+For example:
+  "red" would return the item named "red"
+  ".primary" would return all items with the tag "primary"
+  "!.primary" would return all items that are NOT tagged "primary"
+  ".cool !blue" would return all items that are tagged "cool" and NOT named "blue"
+  ".cool !.primary" would return all items that are tagged "cool" and NOT tagged "primary"
+  "*" would return all items
+
 ### The Power of YAML
 YAML as a format has some built-in support for defining variables and using them.
 You might notice the use of node anchors and references in some of our project code.
