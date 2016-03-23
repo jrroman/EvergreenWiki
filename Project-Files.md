@@ -410,22 +410,26 @@ tasks:
 Tag selectors are used to define complex select groups of tasks based on user-defined tags.
 Selection syntax is currently defined as a whitespace-delimited set of criteria, where each criterion is a different name or tag with optional modifiers.
 Formally, we define the syntax as:
-  Selector := [whitespace-delimited list of Criterion]
-  Criterion :=  (optional ! rune)(optional . rune)<Name> or "*"
-    where "!" specifies a negation of the criteria and "." specifies a tag as opposed to a name
-  Name := <any string>
-    excluding whitespace, '.', and '!'
+```
+Selector := [whitespace-delimited list of Criterion]
+Criterion :=  (optional ! rune)(optional . rune)<Name> or "*"
+  where "!" specifies a negation of the criteria and "." specifies a tag as opposed to a name
+Name := <any string>
+  excluding whitespace, '.', and '!'
+```
 
 Selectors return all items that satisfy all of the criteria.
 That is, they return the *set intersection* of each individual criterion.
 
 For example:
-  "red" would return the item named "red"
-  ".primary" would return all items with the tag "primary"
-  "!.primary" would return all items that are NOT tagged "primary"
-  ".cool !blue" would return all items that are tagged "cool" and NOT named "blue"
-  ".cool !.primary" would return all items that are tagged "cool" and NOT tagged "primary"
-  "*" would return all items
+```
+"red" would return the item named "red"
+".primary" would return all items with the tag "primary"
+"!.primary" would return all items that are NOT tagged "primary"
+".cool !blue" would return all items that are tagged "cool" and NOT named "blue"
+".cool !.primary" would return all items that are tagged "cool" and NOT tagged "primary"
+"*" would return all items
+```
 
 ### The Power of YAML
 YAML as a format has some built-in support for defining variables and using them.
