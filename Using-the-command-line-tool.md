@@ -5,7 +5,7 @@ Downloading the binaries
 --
 
 Go to your evergreen user settings page (accessible the drop-down in the upper right, or at `/settings`) to find links to download the binaries, if the server admin has made them available.
-Copy and paste the text in the configuration panel on the settings page into a file on your machine called ~/.evergreen.yml, which will contain the authentication information needed for running the client.
+Copy and paste the text in the configuration panel on the settings page into a file on your machine called `~/.evergreen.yml`, which will contain the authentication information needed for running the client.
 
 Basic Usage
 --
