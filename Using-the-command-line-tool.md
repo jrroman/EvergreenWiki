@@ -12,7 +12,7 @@ Basic Usage
 
 To submit a patch, run this from your local copy of the mongodb/mongo repo:
 ```bash
-evergreen patch -p <project-id>`
+evergreen patch -p <project-id>
 ```
     
 Variants and tasks for a patch can be specified with the `-v` and `-t`:
