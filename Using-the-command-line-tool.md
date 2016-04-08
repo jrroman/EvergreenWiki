@@ -125,6 +125,21 @@ To add changes to a module on top of an existing  patch:
       evergreen set-module -i <patch_id> -m <module-name>
       ```
 
+#####Validating changes to config files
+
+When editing yaml project files, you can verify that the file will work correctly after committing by checking it with the "validate" command.
+
+    ```
+    evergreen validate <path-to-yaml-project-file>
+    ```
+
+The validation step will check for
+   * valid yaml syntax
+   * correct names for all commands used in the file
+   * logical errors, like duplicated variant or task names
+   * invalid sets of parameters to commands
+   * warning conditions such as referencing a distro pool that does not exist
+
 ### Server Side (for Evergreen admins)
 
 To enable auto-updating of client binaries, add a section like this to the settings file for your server:
