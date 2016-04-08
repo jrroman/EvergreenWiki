@@ -106,32 +106,37 @@ Operating on existing patches
 
 To list patches you've created:
 
-      `evergreen list-patches`
+      evergreen list-patches
 
 
 To cancel a patch:
  
-	  `evergreen cancel-patch -i <patch_id>`
+```
+evergreen cancel-patch -i <patch_id>
+```
     
 To finalize a patch:
  
-      `evergreen finalize-patch -i <patch_id>`
+```
+evergreen finalize-patch -i <patch_id>
+```
+
 
 
 To add changes to a module on top of an existing  patch:
 
-     ```
-      cd ~/projects/module-project-directory
-      evergreen set-module -i <patch_id> -m <module-name>
-      ```
+```
+cd ~/projects/module-project-directory
+evergreen set-module -i <patch_id> -m <module-name>
+```
 
 #####Validating changes to config files
 
 When editing yaml project files, you can verify that the file will work correctly after committing by checking it with the "validate" command.
 
-    ```
-    evergreen validate <path-to-yaml-project-file>
-    ```
+```
+evergreen validate <path-to-yaml-project-file>
+```
 
 The validation step will check for
    * valid yaml syntax
