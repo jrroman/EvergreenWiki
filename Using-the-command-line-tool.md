@@ -5,7 +5,7 @@ Downloading the command line tool
 --
 
 Go to your evergreen user settings page (accessible the drop-down in the upper right, or at `/settings`) to find links to download the binaries, if the server admin has made them available.
-Copy and paste the text in the configuration panel on the settings page into a file in your *home directory* called `.evergreen.yml` in your *home directory*, which will contain the authentication information needed for the client to access the server.
+Copy and paste the text in the configuration panel on the settings page into a file in your *home directory* called `.evergreen.yml`, which will contain the authentication information needed for the client to access the server.
 
 Basic Usage
 --
