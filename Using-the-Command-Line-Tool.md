@@ -1,13 +1,13 @@
 How to set up and use the command-line tool
 ==
 
-Downloading the command line tool
+Downloading the Command Line Tool
 --
 
 Go to your evergreen user settings page (accessible using the user drop-down in the upper right, or at `/settings`) to find links to download the binaries, if the server admin has made them available.
 Copy and paste the text in the configuration panel on the settings page into a file in your *home directory* called `.evergreen.yml`, which will contain the authentication information needed for the client to access the server.
 
-Basic Usage
+Basic Patch Usage
 --
 
 To submit a patch, run this from your local copy of the mongodb/mongo repo:
@@ -144,6 +144,29 @@ The validation step will check for
    * logical errors, like duplicated variant or task names
    * invalid sets of parameters to commands
    * warning conditions such as referencing a distro pool that does not exist
+
+Additionally the `evaluate` command can be used to locally expand task tags and return a fully evaluated version of a project file.
+
+```
+evergreen evaluate <path-to-yaml-project-file>
+```
+
+Flags `--tasks` and `--variants` can be added to only show expanded tasks and variants, respectively.
+
+### Other Commands
+#### List
+
+The command `evergreen list` can help you determine what projects, variants, and tasks are available for patching against.
+The commands
+```
+evergreen list --projects
+evergreen list --tasks -p <project_id>
+evergreen list --variants -p <project_id>
+```
+will all print lists to stdout.
+
+The list command can take an optional `-f/--file` argument for specifying a local project configuration file to use instead of querying the Evergreen server for `-p/--project`.
+
 
 ### Server Side (for Evergreen admins)
 
