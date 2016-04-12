@@ -428,6 +428,51 @@ For example:
 * `.cool !.primary` would return all items that are tagged "cool" and NOT tagged "primary"
 * `*` would return all items
 
+### Complex Dependencies / Requires
+
+Some projects need access to complicated dependency structures in order to function.
+Consider a build with tasks A, B, C, D, and E.
+Task A creates an external resource; Tasks B, C, and D use that resource; Task E destroys the resource.
+For normal builds, this works fine, but allowing patches against a configuration like this can prove dangerous,
+as dependencies cannot guarantee that E will be scheduled if A is.
+
+Evergreen task configurations have a `requires` field for cases like this.
+The `requires` field allows tasks to require other tasks in to be included when creating patches.
+Additionally, dependencies can specify a `patch_optional` flag to denote that a dependency of a task does not
+have to be created automatically when a patch is configured, so that required tasks do not have to schedule all
+of their dependencies.
+Using these two features, we can build a config for the above dependency structure that allows a user to
+schedule task B and have A and E automatically added.
+
+```yaml
+tasks:
+- name: A
+  requires:
+  - name: E
+
+- name: B
+  depends_on:
+  - name: A
+
+- name: C
+  depends_on:
+  - name: A
+
+- name: D
+  depends_on:
+  - name: A
+
+- name: E
+  depends_on:
+  - name: A
+  - name: B
+    patch_optional: true
+  - name: C
+    patch_optional: true
+  - name: D
+    patch_optional: true
+```
+
 ### The Power of YAML
 YAML as a format has some built-in support for defining variables and using them.
 You might notice the use of node anchors and references in some of our project code.
