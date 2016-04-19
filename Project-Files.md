@@ -16,10 +16,11 @@ Though some of them are quite large, the pieces that make them up are very simpl
 
 ### Tasks
 A task is any discrete job you want Evergreen to run, typically a build, test suite, or deployment of some kind.
-A task is made up of a list of commands/functions.
+They are the smallest unit of parallelization within Evergreen.
+Each task is made up of a list of commands/functions.
 Currently we include commands for interacting with git, running shell scripts, parsing test results, and manipulating Amazon s3.
 
-For example, a couple tasks might look like:
+For example, a couple of tasks might look like:
 ```yaml
 tasks:
 - name: compile
@@ -46,7 +47,7 @@ Notice that tasks contain:
 Commands are the building blocks of tasks.
 They do things like clone a project, download artifacts, and execute arbitrary shell scripts.
 Each command has a set of parameters that it can take.
-A full list of commands and their parameters is accessible here.
+A full list of commands and their parameters is accessible [here](Project-Commands).
 
 #### Functions
 Functions are a simple way to group a set of commands together for reuse.
