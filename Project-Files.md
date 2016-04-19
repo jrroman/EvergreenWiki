@@ -200,37 +200,6 @@ Expansions can also take default arguments, in the form of `${key_name|default}`
 If an expansion is used in your project file, but is unset, it will be replaced with its default value.
 If there is no default value, the empty string will be used.
 
-### Functions
-Functions offer a way to share commands across task definitions.
-Functions are defined as follows:
-```yaml
-functions:
-  "function name" :
-    - command: my.command
-    - command: my.command2
-  "function name 2":
-     command: single-command-not-in-a-list
-```
-They can be used anywhere a command can be used.
-
-Functions can also optionally take arguments, in the form of
-```yaml
-- func: "run a function with an arg"
-  vars:
-    foobar: "TESTING"
-```
-These are handled as normal expansions within the function definition.
-That is, in the definition of `"run a function with an arg"` above, we can use the `foobar` parameter by writing
-```yaml
-functions:
-  "run a function with an arg":
-    command: shell.exec
-    params:
-      working_dir: src
-      script: |
-        echo "I was called with ${foobar}"
-```
-
 ### Task Tags
 Most projects have some implicit grouping at every layer.
 Some tests are integration tests, others unit tests; features can be related even if their tests are stored in different places.
