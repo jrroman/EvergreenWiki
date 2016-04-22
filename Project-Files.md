@@ -200,20 +200,20 @@ Expansions can also take default arguments, in the form of `${key_name|default}`
 If an expansion is used in your project file, but is unset, it will be replaced with its default value.
 If there is no default value, the empty string will be used.
 
-#### Default Expansions
+##### Default Expansions
 Every task has some expansions available by default:
 
-`${is_patch}` is "true" if the running task is a patch build, "" if it is not
-`${task_id}` is the task's unique id
-`${task_name}` is the name of the task
-`${execution}` is the execution number of the task (how many times is has been reset)
-`${build_id}` is the id of the build the task belongs to
-`${build_variant}` is the name of the build the task belongs to
-`${version_id}` is the id of the task's version
-`${workdir}` is the distro's working directory
-`${revision}` is the git sha for the tested revision
-`${project}` is the is for the project the task belongs to
-`${branch_name}` is the name of the branch being tested by the project
+* `${is_patch}` is "true" if the running task is a patch build, "" if it is not
+* `${task_id}` is the task's unique id
+* `${task_name}` is the name of the task
+* `${execution}` is the execution number of the task (how many times is has been reset)
+* `${build_id}` is the id of the build the task belongs to
+* `${build_variant}` is the name of the build the task belongs to
+* `${version_id}` is the id of the task's version
+* `${workdir}` is the distro's working directory
+* `${revision}` is the git sha for the tested revision
+* `${project}` is the is for the project the task belongs to
+* `${branch_name}` is the name of the branch being tested by the project
 
 
 ### Task Tags
