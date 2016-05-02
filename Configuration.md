@@ -43,6 +43,13 @@ keys:
     whatever: "/path/to/another.pem"
 ```
 
+#### Superusers 
+Superusers are users who have access to modify all distro and project settings for any project or distro. The list of names correspond to the username that is used to login to Evergreen. Superusers can modify the project settings to allow administrative access to certain users for specific projects. If the superusers list is omitted, every user is considered a superuser. 
+```yaml
+superusers: ['admin1', 'admin2']
+```
+
+
 ##### Runner Process
 The Runner process runs all of the main work within Evergreen, from polling github to starting tests.
 It has one main configurable variable: the number of seconds to wait before starting its process loop.
