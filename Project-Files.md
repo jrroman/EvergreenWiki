@@ -357,6 +357,9 @@ tasks:
     patch_optional: true
 ```
 
+### Ignoring Changes to Certain Files
+_todo_
+
 ### The Power of YAML
 YAML as a format has some built-in support for defining variables and using them.
 You might notice the use of node anchors and references in some of our project code.
