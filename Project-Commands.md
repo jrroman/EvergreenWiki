@@ -121,16 +121,16 @@ Parameters:
 * `file_location`: a .json file to parse and upload
 
 
-####attach.x_unit_results
-This command parses results in the widely-used XUnit format and posts them to the API server.
+####attach.xunit_results
+This command parses results in the XUnit format and posts them to the API server.
 
 ```yaml
 - command: attach.results
   params:
-    file_location: src/results.xml
+    file: src/results.xml
 ```
 
 Parameters:
-* `file_location`: a .xml file to parse and upload
+* `file`: a .xml file to parse and upload. A filepath glob can also be supplied to collect results from multiple files.
 
 
