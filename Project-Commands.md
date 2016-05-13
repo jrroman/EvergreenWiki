@@ -125,7 +125,7 @@ Parameters:
 This command parses results in the XUnit format and posts them to the API server.
 
 ```yaml
-- command: attach.results
+- command: attach.xunit_results
   params:
     file: src/results.xml
 ```
