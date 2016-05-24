@@ -96,7 +96,7 @@ Though keep in mind that the merge base must still exist in the canonical GitHub
 
 
 The `--` feature can also be used to pass flags to `git diff`.
-One common use of this is to pass the `--binary` flag to enable patches with binary files, which can come up when checking in external libraries or tests with .bson data.
+One common use of this is to pass the `--binary` flag to enable patches containing changes to binary files.
 
       evergreen patch -- --binary --full-index
 
