@@ -21,7 +21,7 @@ Parameters:
 * `system_log`: if set to true, the script's output will be written to the task's system logs, instead of inline with logs from the test execution.
 
 ####git.get_project
-This command clones the tracked project repository into a given directory.
+This command clones the tracked project repository into a given directory, and checks out the revision associated with the task. Also applies patches to the source after cloning it, if the task was created by a patch submission.
 
 NOTE: this command currently only supports clone over SSH.
 Make sure your GitHub ssh keys are set up in your target distros.
@@ -34,20 +34,6 @@ Make sure your GitHub ssh keys are set up in your target distros.
 
 Parameters:
 * `dir`: the directory to clone into
-
-####git.apply_patch
-Applies a user patch to the tracked project in the given directory.
-
-NOTE: This will be rolled into the `git.get_project` command eventually.
-
-```yaml
-- command: git.apply_patch
-  params:
-    directory: src
-```
-
-Parameters:
-* `dir`: the directory to apply the diff in (same as `git.get_project`)
 
 ####s3.put
 This command uploads a file to Amazon s3, for use in later tasks or distribution.
