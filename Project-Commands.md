@@ -18,6 +18,7 @@ Parameters:
 * `background`: if set to true, does not wait for the script to exit before running the next commands
 * `silent`: if set to true, does not log any shell output during execution; useful to avoid leaking sensitive info
 * `continue_on_err`: if set to true, causes command to exit with success regardless of the script's exit code
+* `system_log`: if set to true, the script's output will be written to the task's system logs, instead of inline with logs from the test execution.
 
 ####git.get_project
 This command clones the tracked project repository into a given directory.
