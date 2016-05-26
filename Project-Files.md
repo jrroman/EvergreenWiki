@@ -360,14 +360,16 @@ tasks:
 ### Ignoring Changes to Certain Files
 Some commits to your repository don't need to be tested.
 The obvious examples here would be documentation or configuration files for other Evergreen projects—changes to README.md don't need to trigger your builds.
-Projects files can define an `ignore` list of gitignore-style globs that tell Evergreen to not automatically run tasks for commits that only change ignored files.
+To address this, project files can define a top-level `ignore` list of gitignore-style globs which tell Evergreen to not automatically run tasks for commits that only change ignored files.
 ```yaml
 ignore:
-    - "version.json" # dont schedule tests for changes to this specific file
+    - "version.json" # don't schedule tests for changes to this specific file
     - "*.md" # don't schedule tests for changes to any markdown files
     - "*.txt" # don't schedule tests for changes to any txt files
     - "!testdata/sample.txt" # EXCEPT for changes to this txt file that's part of a test suite
 ```
+In the above example, a commit that only changes `README.md` would not be automatically scheduled, since `*.md` is ignored. A commit that changes both `README.md` and `important_file.cpp` _would_ schedule tasks, since only some of the commit's changed files are ignored.
+
 Full gitignore syntax is explained [here](https://git-scm.com/docs/gitignore). Ignored versions may still be scheduled manually, and their tasks will still be scheduled on failure stepback.
 
 ### The Power of YAML
