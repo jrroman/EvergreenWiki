@@ -168,6 +168,25 @@ will all print lists to stdout.
 The list command can take an optional `-f/--file` argument for specifying a local project configuration file to use instead of querying the Evergreen server for `-p/--project`.
 
 
+#### Last Green
+
+The command `evergreen last-green` can help you find an entirely successful commit to patch against.
+To use it, specify the project you wish to query along with the set of variants to verify as passing. 
+```
+evergreen last-green -p <project_id> -v <variant1> -v <variant2> -v <variant...>
+```
+
+A run might look something like
+```
+evergreen last-green -p mci -v ubuntu
+
+   Revision : 97ac269b1e5cf0961fce5bcf985f01c263911efb
+    Message : EVG-795 no longer treat conflicting targets as system failures
+       Link : https://evergreen.mongodb.com/version/mci_97ac269b1e5cf0961fce5bcf985f01c263911efb
+
+```
+
+
 ### Server Side (for Evergreen admins)
 
 To enable auto-updating of client binaries, add a section like this to the settings file for your server:
