@@ -154,6 +154,18 @@ evergreen evaluate <path-to-yaml-project-file>
 Flags `--tasks` and `--variants` can be added to only show expanded tasks and variants, respectively.
 
 ### Other Commands
+
+#### Fetch
+
+The command `evergreen fetch` can automate downloading of the binaries associated with a particular task, or cloning the repo for the task and setting up patches/modules appropriately.
+
+Example that downloads the artifacts for the given task ID and cloning its source:
+```
+evergreen fetch -t <task-id> --source --artifacts
+```
+
+Specify the optional `--dir` argument to choose the destination path where the data is fetched to; if omitted, it defaults to the current working directory.
+ 
 #### List
 
 The command `evergreen list` can help you determine what projects, variants, and tasks are available for patching against.
