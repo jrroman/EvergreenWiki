@@ -62,3 +62,11 @@ The Distros page allows all users to see all available distros a project can run
 As a superuser or admin, one can also add new distro configurations to be used by other users. 
 
 [[images/distros.png]]
+
+*TODO*
+
+##### Teardown Scripts
+
+Superusers can specify shell scripts to be run at the end of a dynamic host's life, just before it is terminated.
+Errors encountered during execution will be logged in the host's even log and broadcasted to all Evergreen administrators.
+Please note that if the host is taken away without Evergreen's knowledge (e.g. a spot price increase takes an EC2 host away), the teardown script will not be executed.
