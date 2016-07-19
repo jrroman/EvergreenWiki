@@ -183,7 +183,7 @@ You may also force a specific command to trigger a failure if it does not appear
 Example:
 
 ```yaml
-exec_timeout_secs: 60 // automatically fail any task if it takes longer than a minute to finish.
+exec_timeout_secs: 60 # automatically fail any task if it takes longer than a minute to finish.
 buildvariants:
 - name: osx-108
   display_name: OSX
@@ -196,7 +196,7 @@ tasks:
   name: compile
   commands:
     - command: shell.exec
-      timeout_secs: 10 // force this command to fail if it stays "idle" for 10 seconds or more
+      timeout_secs: 10 # force this command to fail if it stays "idle" for 10 seconds or more
       params:
         script: |
           sleep 1000
