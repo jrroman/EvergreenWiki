@@ -175,6 +175,36 @@ timeout:
         python buildscripts/hang_analyzer.py
 ```
 
+You can customize the points at which the "timeout" conditions are triggered.
+To cause a task to stop (and fail) if it doesn't complete within an allotted time, set the key `exec_timeout_secs` on the project file to the maximum allowed length of execution time. This timeout defaults to *6 hours*.
+
+You may also force a specific command to trigger a failure if it does not appear to generate any output on `stdout`/`stderr` for more than a certain threshold, using the `timeout_secs` setting on the command. As long as the command does not appear to be idle it will be allowed to continue, but if it does not write any output for longer than `timeout_secs` then the timeout handler will be triggered.
+
+Example:
+
+```yaml
+exec_timeout_secs: 60 // automatically fail any task if it takes longer than a minute to finish.
+buildvariants:
+- name: osx-108
+  display_name: OSX
+  run_on:
+  - localtestdistro
+  tasks:
+  - name: compile
+
+tasks:
+  name: compile
+  commands:
+    - command: shell.exec
+      timeout_secs: 10 // force this command to fail if it stays "idle" for 10 seconds or more
+      params:
+        script: |
+          sleep 1000
+```
+
+
+exec_timeout_secs
+
 ### Expansions
 
 Expansions are variables within your config file. 
