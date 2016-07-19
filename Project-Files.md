@@ -246,7 +246,7 @@ tasks:
 
 Tags can be referenced in variant definitions to quickly include groups of tasks.
 ```yaml
-variants:
+buildvariants:
   # this project only does browser tests on OSX
 - name: osx
     display_name: OSX
