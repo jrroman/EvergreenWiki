@@ -342,6 +342,96 @@ For example:
 * `.cool !.primary` would return all items that are tagged "cool" and NOT tagged "primary"
 * `*` would return all items
 
+### Matrix Variant Definition
+
+Evergreen provides a format for defining a wide range of variants based on a combination of matrix axes.
+This is similar to configuration definitions in systems like Jenkins and Travis.
+
+Take, for example, a case where a program may want to test on combinations of operating system, python version, and compile flags.
+We could build a matrix like:
+
+```yaml
+# This is a simple matrix definition for our new python driver, "Mongython".
+# We have several test suites (not defined in this example) we would like to run
+# on combinations of operating system, python interpreter, and the inclusion of 
+# python C extensions.
+
+axes:
+  # we test our fake python driver on Linux and Windows
+- id: os 
+  display_name: "OS"
+  values:
+
+  - name: linux
+    display_name: "Linux"
+    run_on: centos6-perf
+
+  - name: windows
+    display_name: "Windows 95"
+    run_on: windows95-test
+
+  # we run our tests against python 2.6 and 3.0, along with
+  # external implementations pypy and jython
+- id: python
+  display_name: "Python Implementation"
+  values:
+
+  - name: "python26"
+    display_name: "2.6"
+    variables:
+      # this variable will be used to tell the tasks what executable to run
+      pybin: "/path/to/26"
+
+  - name: "python3"
+    display_name: "3.0"
+    variables:
+      pybin: "/path/to/3"
+
+  - name: "pypy"
+    display_name: "PyPy"
+    variables:
+      pybin: "/path/to/pypy"
+
+  - name: "jython"
+    display_name: "Jython"
+    variables:
+      pybin: "/path/to/jython"
+
+  # we must test our code both with and without C libraries
+- id: c-extensions
+  display_name: "C Extensions"
+  values:
+
+  - name: "with-c"
+    display_name: "With C Extensions"
+    variables:
+      # this variable tells a test whether or not to link against C code
+      use_c: true
+
+  - name: "without-c"
+    display_name: "Without C Extensions"
+    variables:
+      use_c: false
+
+variants:
+- matrix_name: "tests"
+  matrix_spec: {os: "*", python: "*", c-extensions: "*"}
+  matrix_exclude:
+    # pypy and jython do not support C extensions, so we disable those variants
+    python: ["pypy", "jython"]
+    c-extensions: with-c
+  display_name: "${os} ${python} ${c-extensions}" 
+  tasks : "*"
+  rules:
+  # let's say we have an LDAP auth task that requires a C library to work on Windows,
+  # here we can remove that task for all windows variants without c extensions
+  - if:
+      os: windows
+      c-extensions: false
+    then:
+      remove_task: ["ldap_auth"]
+```
+
 ### Complex Dependencies / Requires
 
 Some projects need access to complicated dependency structures in order to function.
