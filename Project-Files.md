@@ -522,6 +522,41 @@ variants:
   rules: []                          # OPTIONAL special cases to handle for certain axis value combinations (see below)
 ```
 
+Note that fields like "modules" and "stepback" that can be defined by axis values will be overwritten by their axis value settings.
+
+The `matrix_spec` and `exclude_spec` fields both take maps of `axis: axis_values` as their inputs.
+These axis values are combined to generate variants.
+The format itself is relatively flexible, and each axis can be defined as either 
+`axis_id: single_axis_value`, `axis_id: ["value1", "value2"]`, or `axis_id: ".tag .selector"`.
+That is, each axis can define a single value, array of values, or axis value tag selectors to show which values to contribute to the generated variants.
+The most common selector, however, will usually be `axis_id: "*"`, which selects all values for an axis.
+
+Keep in mind that YAML is a superset of JSON, so
+```yaml
+matrix_spec: {"a1":"*", "a2":["v1", "v2"]}
+```
+is the same as
+```yaml
+  matrix_spec:
+    a1: "*"
+    a2:
+    - v1
+    - v2
+```
+Also keep in mind that the exclude_spec field can optionally take multiple matrix specs, e.g.
+```yaml
+exclude_spec:
+- a1: v1
+  a2: v1
+- a1: v3
+  a4: .tagged_vals
+```
+
+
+#### The Rules Field
+TODO
+#### Referencing Matrix Variants
+TODO
 
 
 
