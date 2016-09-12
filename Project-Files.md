@@ -435,11 +435,11 @@ variants:
 In the above example, notice how we define a set of axes and then combine them in a matrix definition. 
 The equivalent set of matrix definitions would be much longer and harder to maintain if built out individually.
 
-##### Axis Definitions
+#### Axis Definitions
 
 Axes and axis values are the building block of a matrix.
-Conceptually, you can imagine an axis to be a variable, and its axis values are values for that variable.
-The example above includes an axis called "python_version", and its values enumerate different python interpreters to use.
+Conceptually, you can imagine an axis to be a variable, and its axis values are different values for that variable.
+For example the YAML above includes an axis called "python_version", and its values enumerate different python interpreters to use.
 
 Axes are defined in their own root section of a project file:
 
@@ -457,16 +457,17 @@ axes:
     tags: ["1", "taggy"]     # OPTIONAL string or array of strings to tag the axis value
     batchtime: 3600          # OPTIONAL how many minutes to wait before scheduling new tasks of this variant
     modules: "enterprise"    # OPTIONAL string or array of strings for modules to include in the variant
+    stepback: false          # OPTIONAL whether to run previous commits to pinpoint a failure's origin (on by default)
   - name: "v2"
     # and so on...
 ```
 
-During evaluation, axes are evaluated from *top to bottom*, so earlier axis values cab have their fields overwritten by values in later-defined axes.
+During evaluation, axes are evaluated from *top to bottom*, so earlier axis values can have their fields overwritten by values in later-defined axes.
 There are some important things to note here:
 
-ONE: The `variables` and `tags` fields are _not_ overwritten by later values, but rather merged into.
+*ONE:* The `variables` and `tags` fields are _not_ overwritten by later values, but rather merged into.
 
-TWO: Axis values can reference variables defined in previous axes.
+*TWO:* Axis values can reference variables defined in previous axes.
 Say we have four distros: windows_small, windows_big, linux_small, linux_big.
 We could define axes to create variants the utilize those distros by doing:
 
@@ -490,6 +491,39 @@ axes:
    variables:
 ```
 Where the run_on fields will be evaluated when the matrix is parsed.
+
+
+#### Matrix Variants
+
+You glue those axis values together inside a variant matrix definition.
+In the example python driver configuration, we defined a matrix called "test" that combined all of our axes
+and excluded some combinations we wanted to avoid testing.
+Formally, a matrix is defined like:
+
+```yaml
+variants:
+- matrix_name: "matrix_1"            # unique identifier 
+  matrix_spec:                       # a set of axis ids and axis value selectors to combine into a matrix
+    axis_1: value
+    axis_2:
+    - v1
+    - v2
+    axis_3: .tagged_values
+  exclude_spec:                      # OPTIONAL one or an array of "matrix_spec" selectors for excluding combinations
+    axis_2: v2
+    axis_3: ["v5", "v6"]
+  display_name: "${os} and ${size}"  # string expanded with axis display_names (see below)
+  run_on: "ec2_large"                # OPTIONAL string or array of strings defining which distro(s) to use
+  tags: ["1", "taggy"]               # OPTIONAL string or array of strings to tag the resulting variants
+  batchtime: 3600                    # OPTIONAL how many minutes to wait before scheduling new tasks 
+  modules: "enterprise"              # OPTIONAL string or array of strings for modules to include in the variants
+  stepback: false                    # OPTIONAL whether to run previous commits to pinpoint a failure's origin (on by default)
+  tasks: ["t1", "t2"]                # task selector or array of selectors defining which tasks to run, same as any variant definition
+  rules: []                          # OPTIONAL special cases to handle for certain axis value combinations (see below)
+```
+
+
+
 
 
 
