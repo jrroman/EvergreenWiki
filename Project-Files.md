@@ -351,7 +351,7 @@ Take, for example, a case where a program may want to test on combinations of op
 We could build a matrix like:
 
 ```yaml
-# This is a simple matrix definition for our new python driver, "Mongython".
+# This is a simple matrix definition for our new MongoDB python driver, "Mongython".
 # We have several test suites (not defined in this example) we would like to run
 # on combinations of operating system, python interpreter, and the inclusion of 
 # python C extensions.
@@ -416,7 +416,7 @@ axes:
 variants:
 - matrix_name: "tests"
   matrix_spec: {os: "*", python: "*", c-extensions: "*"}
-  matrix_exclude:
+  exclude_spec:
     # pypy and jython do not support C extensions, so we disable those variants
     python: ["pypy", "jython"]
     c-extensions: with-c
@@ -428,9 +428,71 @@ variants:
   - if:
       os: windows
       c-extensions: false
+      python: "*"
     then:
       remove_task: ["ldap_auth"]
 ```
+In the above example, notice how we define a set of axes and then combine them in a matrix definition. 
+The equivalent set of matrix definitions would be much longer and harder to maintain if built out individually.
+
+##### Axis Definitions
+
+Axes and axis values are the building block of a matrix.
+Conceptually, you can imagine an axis to be a variable, and its axis values are values for that variable.
+The example above includes an axis called "python_version", and its values enumerate different python interpreters to use.
+
+Axes are defined in their own root section of a project file:
+
+```yaml
+axes:
+- id: "axis_1"               # unique identifier 
+  display_name: "Axis 1"     # OPTIONAL human-readable identifier
+  values:
+  - name: "v1"               # unique identifier
+    display_name: "Value 1"  # OPTIONAL string for substitution into a variant display name (more on that later)
+    variables:               # OPTIONAL set of key-value pairs to update expansions
+      key1: "1"
+      key2: "two"
+    run_on: "ec2_large"      # OPTIONAL string or array of strings defining which distro(s) to use
+    tags: ["1", "taggy"]     # OPTIONAL string or array of strings to tag the axis value
+    batchtime: 3600          # OPTIONAL how many minutes to wait before scheduling new tasks of this variant
+    modules: "enterprise"    # OPTIONAL string or array of strings for modules to include in the variant
+  - name: "v2"
+    # and so on...
+```
+
+During evaluation, axes are evaluated from *top to bottom*, so earlier axis values cab have their fields overwritten by values in later-defined axes.
+There are some important things to note here:
+
+ONE: The `variables` and `tags` fields are _not_ overwritten by later values, but rather merged into.
+
+TWO: Axis values can reference variables defined in previous axes.
+Say we have four distros: windows_small, windows_big, linux_small, linux_big.
+We could define axes to create variants the utilize those distros by doing:
+
+```yaml
+axes:
+-id: size
+ values:
+ - name: small
+   variables:
+     distro_size: small
+ - name: big
+   variables:
+     distro_size: big
+-id: os
+ values:
+ - name: win
+   run_on: "windows_${distro_size}"
+
+ - name: linux
+   run_on: "linux_${distro_size}"
+   variables:
+```
+Where the run_on fields will be evaluated when the matrix is parsed.
+
+
+
 
 ### Complex Dependencies / Requires
 
