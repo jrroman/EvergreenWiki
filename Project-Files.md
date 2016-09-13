@@ -552,15 +552,75 @@ exclude_spec:
   a4: .tagged_vals
 ```
 
-
 #### The Rules Field
-TODO
+Sometimes certain combinations of axis values may require special casing.
+The matrix syntax handles this using the `rules` field.
+
+Rules is a list simple if-then clauses that allow you to change variants settings, add tasks, or remove them.
+For example, in the python driver YAML from earlier:
+```yaml
+  rules:
+  - if:
+      os: windows
+      c-extensions: false
+      python: "*"
+    then:
+      remove_task: ["ldap_auth"]
+
+```
+tells the matrix parser to exclude the "ldap_auth" test from windows variants that build without C extensions.
+
+The `if` field of a rule takes a matrix selector, similar to the matrix `exclude_spec` field.
+Any matrix variants that are contained by the selector will ave the rules applied.
+In the example above, the variant `{"os":"windows", "c-extensions": "false", "python": "2.6"}` will match the rule, but `{"os":"linux", "c-extensions": "false", "python": "2.6"}` will not, since its `os` is not "windows."
+
+The `then` field describes what to do with matching variants.
+It takes the form
+```yaml
+then:
+  add_tasks:                            # OPTIONAL a single task selector or list of task selectors
+  - task_id
+  - .tag
+  - name: full_variant_task
+    depends_on: etc
+  remove_tasks:                         # OPTIONAL a single task selector or list of task selectors
+  - task_id
+  - .tag
+  set:                                  # OPTIONAL any axis_value fields (except for id and display_name)
+    tags: tagname
+    run_on: special_snowflake_distro
+```
+
 #### Referencing Matrix Variants
-TODO
 
+Because matrix variant ids are generated and not meant to be easily readable, the normal way of referencing them (e.g. in a `depends_on` field) does not work.
+Fortunately there are other ways to reference matrix variants using variant selectors.
 
+The most succinct way is with tag selectors.
+If an axis value defines a `tags` field, then you can reference the resulting variants by referencing the tag.
+```yaml
+variant: ".tagname"
+```
+More complicated selector strings are possible as well
+```yaml
+variant: ".windows !.debug !special_variant"
+```
 
+You can also reference matrix variants with matrix definitions, just like `matrix_spec`. 
+A single set of axis/axis value pairs will select one variant
+```yaml
+variant:
+  os: windows
+  size: large
+```
+Multiple axis values will select multiple variants
+```yaml
+variant: 
+  os: ".unix" # tag selector
+  size: ["large", "small"]
+```
 
+Note that the `rules` `if` field can only take these matrix-spec-style selectors, not tags, since rules can modify a variant's tags.
 
 
 ### Complex Dependencies / Requires
