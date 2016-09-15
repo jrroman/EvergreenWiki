@@ -623,6 +623,16 @@ variant:
 Note that the `rules` `if` field can only take these matrix-spec-style selectors, not tags, since rules can modify a variant's tags.
 
 
+#### Matrix Tips and Tricks
+
+For more examples of matrix project files, check out
+* [Test Matrix 1](https://github.com/evergreen-ci/evergreen/blob/master/model/testdata/matrix_simple.yml)
+* [Test Matrix 2](https://github.com/evergreen-ci/evergreen/blob/master/model/testdata/matrix_python.yml)
+* [Test Matrix 3](https://github.com/evergreen-ci/evergreen/blob/master/model/testdata/matrix_deps.yml)
+
+When developing a matrix project file, the Evergreen command line tool offers an `evaluate` command capable of expanding matrix definitions into their resulting variants client-side.
+Run `evergreen evaluate --variant my_project_file.yml` to print out an evaluated version of the project.
+
 ### Complex Dependencies / Requires
 
 Some projects need access to complicated dependency structures in order to function.
