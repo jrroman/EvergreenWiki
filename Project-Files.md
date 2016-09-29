@@ -351,7 +351,7 @@ Take, for example, a case where a program may want to test on combinations of op
 We could build a matrix like:
 
 ```yaml
-# This is a simple matrix definition for our new MongoDB python driver, "Mongython".
+# This is a simple matrix definition for a fake MongoDB python driver, "Mongython".
 # We have several test suites (not defined in this example) we would like to run
 # on combinations of operating system, python interpreter, and the inclusion of 
 # python C extensions.
@@ -465,7 +465,9 @@ axes:
 During evaluation, axes are evaluated from *top to bottom*, so earlier axis values can have their fields overwritten by values in later-defined axes.
 There are some important things to note here:
 
-*ONE:* The `variables` and `tags` fields are _not_ overwritten by later values, but rather merged into.
+*ONE:* The `variables` and `tags` fields are _not_ overwritten by later values.
+Instead, when a later axis value adds new tags or variables, those values are _merged_ into the previous defintions.
+If axis 1 defines tag "windows" and axis 2 defines tag "64-bit", the resulting variant would have both "windows" and "64-bit" as tags.
 
 *TWO:* Axis values can reference variables defined in previous axes.
 Say we have four distros: windows_small, windows_big, linux_small, linux_big.
@@ -556,7 +558,7 @@ exclude_spec:
 Sometimes certain combinations of axis values may require special casing.
 The matrix syntax handles this using the `rules` field.
 
-Rules is a list simple if-then clauses that allow you to change variants settings, add tasks, or remove them.
+Rules is a list of simple if-then clauses that allow you to change variant settings, add tasks, or remove them.
 For example, in the python driver YAML from earlier:
 ```yaml
   rules:
@@ -593,7 +595,7 @@ then:
 
 #### Referencing Matrix Variants
 
-Because matrix variant ids are generated and not meant to be easily readable, the normal way of referencing them (e.g. in a `depends_on` field) does not work.
+Because generated matrix variant ids are not meant to be easily readable, the normal way of referencing them (e.g. in a `depends_on` field) does not work.
 Fortunately there are other ways to reference matrix variants using variant selectors.
 
 The most succinct way is with tag selectors.
