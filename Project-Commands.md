@@ -60,6 +60,7 @@ Parameters:
 * `permissions`: the ec2 permissions string to upload with
 * `content_type`: the MIME type of the file
 * `display_name`: the display string for the file in the Evergreen UI
+* `local_files_include_filter`: used in place of local_file, an array of gitignore file globs. All files that would be matched, and therefore ignored by gitignore, are included in the put. In this case, remote_file becomes a prefix for all matched local files and the display_name field becomes a prefix to the file name when displayed.
 
 ####gotest.parse
 This command parses Go test results and sends them to the API server.
