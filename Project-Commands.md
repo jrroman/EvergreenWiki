@@ -59,6 +59,7 @@ Parameters:
 * `bucket`: the ec2 bucket to use
 * `permissions`: the ec2 permissions string to upload with
 * `content_type`: the MIME type of the file
+* `optional`: boolean to indicate if failure to find or upload this file will result in a task failure. Not compatible with local_files_include_filter.
 * `display_name`: the display string for the file in the Evergreen UI
 * `local_files_include_filter`: used in place of local_file, an array of gitignore file globs. All files that are matched - ones that would be ignored by gitignore - are included in the put. In this case, remote_file becomes a prefix for all matched local files and the display_name field becomes a prefix to the file name when displayed.
 
