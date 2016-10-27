@@ -234,6 +234,7 @@ If there is no default value, the empty string will be used.
 Every task has some expansions available by default:
 
 * `${is_patch}` is "true" if the running task is a patch build, "" if it is not
+* `${author}` is the patch author's username for patch tasks or the git commit author for git tasks
 * `${task_id}` is the task's unique id
 * `${task_name}` is the name of the task
 * `${execution}` is the execution number of the task (how many times is has been reset)
