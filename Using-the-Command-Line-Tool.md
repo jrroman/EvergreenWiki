@@ -4,7 +4,7 @@ How to set up and use the command-line tool
 Downloading the Command Line Tool
 --
 
-Go to your evergreen user settings page (accessible using the user drop-down in the upper right, or at `/settings`) to find links to download the binaries, if the server admin has made them available.
+Go to your [evergreen user settings page](https://evergreen.mongodb.com/settings) (accessible using the user drop-down in the upper right, or at `/settings`) to find links to download the binaries, if the server admin has made them available.
 Copy and paste the text in the configuration panel on the settings page into a file in your *home directory* called `.evergreen.yml`, which will contain the authentication information needed for the client to access the server.
 
 Basic Patch Usage
