@@ -230,6 +230,12 @@ Expansions can also take default arguments, in the form of `${key_name|default}`
 If an expansion is used in your project file, but is unset, it will be replaced with its default value.
 If there is no default value, the empty string will be used.
 
+##### Usage
+Expansions can be used as input to any yaml command field that expects a string.
+The flip-side of this is that expansions are not currently supported for fields that expect boolean or integer inputs, including `timeout_secs`.
+
+If you find a command that does not accept string expansions, please file a ticket or issues. That's a bug.
+
 ##### Default Expansions
 Every task has some expansions available by default:
 
