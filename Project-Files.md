@@ -369,11 +369,11 @@ axes:
   display_name: "OS"
   values:
 
-  - name: linux
+  - id: linux
     display_name: "Linux"
     run_on: centos6-perf
 
-  - name: windows
+  - id: windows
     display_name: "Windows 95"
     run_on: windows95-test
 
@@ -383,23 +383,23 @@ axes:
   display_name: "Python Implementation"
   values:
 
-  - name: "python26"
+  - id: "python26"
     display_name: "2.6"
     variables:
       # this variable will be used to tell the tasks what executable to run
       pybin: "/path/to/26"
 
-  - name: "python3"
+  - id: "python3"
     display_name: "3.0"
     variables:
       pybin: "/path/to/3"
 
-  - name: "pypy"
+  - id: "pypy"
     display_name: "PyPy"
     variables:
       pybin: "/path/to/pypy"
 
-  - name: "jython"
+  - id: "jython"
     display_name: "Jython"
     variables:
       pybin: "/path/to/jython"
@@ -409,18 +409,18 @@ axes:
   display_name: "C Extensions"
   values:
 
-  - name: "with-c"
+  - id: "with-c"
     display_name: "With C Extensions"
     variables:
       # this variable tells a test whether or not to link against C code
       use_c: true
 
-  - name: "without-c"
+  - id: "without-c"
     display_name: "Without C Extensions"
     variables:
       use_c: false
 
-variants:
+buildvariants:
 - matrix_name: "tests"
   matrix_spec: {os: "*", python: "*", c-extensions: "*"}
   exclude_spec:
@@ -455,7 +455,7 @@ axes:
 - id: "axis_1"               # unique identifier 
   display_name: "Axis 1"     # OPTIONAL human-readable identifier
   values:
-  - name: "v1"               # unique identifier
+  - id: "v1"               # unique identifier
     display_name: "Value 1"  # OPTIONAL string for substitution into a variant display name (more on that later)
     variables:               # OPTIONAL set of key-value pairs to update expansions
       key1: "1"
@@ -465,7 +465,7 @@ axes:
     batchtime: 3600          # OPTIONAL how many minutes to wait before scheduling new tasks of this variant
     modules: "enterprise"    # OPTIONAL string or array of strings for modules to include in the variant
     stepback: false          # OPTIONAL whether to run previous commits to pinpoint a failure's origin (on by default)
-  - name: "v2"
+  - id: "v2"
     # and so on...
 ```
 
@@ -484,18 +484,18 @@ We could define axes to create variants the utilize those distros by doing:
 axes:
 -id: size
  values:
- - name: small
+ - id: small
    variables:
      distro_size: small
- - name: big
+ - id: big
    variables:
      distro_size: big
 -id: os
  values:
- - name: win
+ - id: win
    run_on: "windows_${distro_size}"
 
- - name: linux
+ - id: linux
    run_on: "linux_${distro_size}"
    variables:
 ```
@@ -510,7 +510,7 @@ and excluded some combinations we wanted to avoid testing.
 Formally, a matrix is defined like:
 
 ```yaml
-variants:
+buildvariants:
 - matrix_name: "matrix_1"            # unique identifier 
   matrix_spec:                       # a set of axis ids and axis value selectors to combine into a matrix
     axis_1: value
