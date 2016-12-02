@@ -464,7 +464,7 @@ axes:
     tags: ["1", "taggy"]     # OPTIONAL string or array of strings to tag the axis value
     batchtime: 3600          # OPTIONAL how many minutes to wait before scheduling new tasks of this variant
     modules: "enterprise"    # OPTIONAL string or array of strings for modules to include in the variant
-    stepback: false          # OPTIONAL whether to run previous commits to pinpoint a failure's origin (on by default)
+    stepback: false          # OPTIONAL whether to run previous commits to pinpoint a failure's origin (off by default)
   - id: "v2"
     # and so on...
 ```
@@ -526,7 +526,7 @@ buildvariants:
   tags: ["1", "taggy"]               # OPTIONAL string or array of strings to tag the resulting variants
   batchtime: 3600                    # OPTIONAL how many minutes to wait before scheduling new tasks 
   modules: "enterprise"              # OPTIONAL string or array of strings for modules to include in the variants
-  stepback: false                    # OPTIONAL whether to run previous commits to pinpoint a failure's origin (on by default)
+  stepback: false                    # OPTIONAL whether to run previous commits to pinpoint a failure's origin (off by default)
   tasks: ["t1", "t2"]                # task selector or array of selectors defining which tasks to run, same as any variant definition
   rules: []                          # OPTIONAL special cases to handle for certain axis value combinations (see below)
 ```
