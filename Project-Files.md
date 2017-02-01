@@ -249,7 +249,7 @@ Every task has some expansions available by default:
 * `${version_id}` is the id of the task's version
 * `${workdir}` is the distro's working directory
 * `${revision}` is the git sha for the tested revision
-* `${project}` is the is for the project the task belongs to
+* `${project}` is the project identifier the task belongs to
 * `${branch_name}` is the name of the branch being tested by the project
 
 
