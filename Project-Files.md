@@ -151,6 +151,8 @@ These features will help you do more complicated workloads with Evergreen.
 All projects can have a `pre` and `post` field which define a list of command to run at the start and end of every task.
 These are incredibly useful as a place for results commands or for `shell.track`/`shell.cleanup`.
 
+**NOTE:** failures in `pre` and `post` commands will be ignored, so only use commands you know will succeed.
+
 ```yaml
 pre:
   - command: shell.track
