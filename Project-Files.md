@@ -28,9 +28,9 @@ tasks:
     - command: git.get_project
       params:
         directory: src
-    - func: "compile and upload to s3" 
-- name: passing_test 
-  depends_on: 
+    - func: "compile and upload to s3"
+- name: passing_test
+  depends_on:
   - name: compile
   commands:
     - func: "download compiled artifacts"
@@ -75,7 +75,7 @@ functions:
       - command: shell.exec
         params:
           script: |
-            cd mongodb 
+            cd mongodb
             ./mongo${extension} --nodb --eval 'assert.soon(function(x){try{var d = new Mongo("localhost:27017"); return true}catch(e){return false}}, "timed out connecting")'
             echo "mongod is up."
 ```
@@ -98,7 +98,7 @@ Notice that the function reference can define a set of `vars` which are treated 
 
 
 ### Build Variants
-Build variants are a set of tasks run on a given platform. 
+Build variants are a set of tasks run on a given platform.
 Each build variant has control over which tasks it runs, what distro it runs on, and what expansions it uses.
 
 ```yaml
@@ -149,19 +149,23 @@ These features will help you do more complicated workloads with Evergreen.
 ### Pre, Post, and Timeout
 
 All projects can have a `pre` and `post` field which define a list of command to run at the start and end of every task.
-These are incredibly useful as a place for results commands or for `shell.track`/`shell.cleanup`.
+These are incredibly useful as a place for results commands or for
+cleanup and setup tasks.
 
 **NOTE:** failures in `pre` and `post` commands will be ignored, so only use commands you know will succeed.
 
 ```yaml
 pre:
-  - command: shell.track
+  - command: shell.exec
+    params:
+      working_dir: src
+      script: |
+        # do setup
 
 post:
   - command: attach.results
     params:
       file_location: src/report.json
-  - command: shell.cleanup
 ```
 
 Additionally, project configs offer a hook for running command when a task times out,
@@ -209,7 +213,7 @@ exec_timeout_secs
 
 ### Expansions
 
-Expansions are variables within your config file. 
+Expansions are variables within your config file.
 They take the form `${key_name}` within your project,
 and are defined on a project-wide level on the project configuration page or on a build variant level within in the project.
 They can be used an inputs to commands, including shell scripts.
@@ -226,7 +230,7 @@ Expansions can also take default arguments, in the form of `${key_name|default}`
     params:
       working_dir: src
       script: |
-        if [ ${has_pyyaml_installed|false} = false ]; then 
+        if [ ${has_pyyaml_installed|false} = false ]; then
         ...
 ```
 If an expansion is used in your project file, but is unset, it will be replaced with its default value.
@@ -362,12 +366,12 @@ We could build a matrix like:
 ```yaml
 # This is a simple matrix definition for a fake MongoDB python driver, "Mongython".
 # We have several test suites (not defined in this example) we would like to run
-# on combinations of operating system, python interpreter, and the inclusion of 
+# on combinations of operating system, python interpreter, and the inclusion of
 # python C extensions.
 
 axes:
   # we test our fake python driver on Linux and Windows
-- id: os 
+- id: os
   display_name: "OS"
   values:
 
@@ -429,7 +433,7 @@ buildvariants:
     # pypy and jython do not support C extensions, so we disable those variants
     python: ["pypy", "jython"]
     c-extensions: with-c
-  display_name: "${os} ${python} ${c-extensions}" 
+  display_name: "${os} ${python} ${c-extensions}"
   tasks : "*"
   rules:
   # let's say we have an LDAP auth task that requires a C library to work on Windows,
@@ -441,7 +445,7 @@ buildvariants:
     then:
       remove_task: ["ldap_auth"]
 ```
-In the above example, notice how we define a set of axes and then combine them in a matrix definition. 
+In the above example, notice how we define a set of axes and then combine them in a matrix definition.
 The equivalent set of matrix definitions would be much longer and harder to maintain if built out individually.
 
 #### Axis Definitions
@@ -454,7 +458,7 @@ Axes are defined in their own root section of a project file:
 
 ```yaml
 axes:
-- id: "axis_1"               # unique identifier 
+- id: "axis_1"               # unique identifier
   display_name: "Axis 1"     # OPTIONAL human-readable identifier
   values:
   - id: "v1"               # unique identifier
@@ -513,7 +517,7 @@ Formally, a matrix is defined like:
 
 ```yaml
 buildvariants:
-- matrix_name: "matrix_1"            # unique identifier 
+- matrix_name: "matrix_1"            # unique identifier
   matrix_spec:                       # a set of axis ids and axis value selectors to combine into a matrix
     axis_1: value
     axis_2:
@@ -526,7 +530,7 @@ buildvariants:
   display_name: "${os} and ${size}"  # string expanded with axis display_names (see below)
   run_on: "ec2_large"                # OPTIONAL string or array of strings defining which distro(s) to use
   tags: ["1", "taggy"]               # OPTIONAL string or array of strings to tag the resulting variants
-  batchtime: 3600                    # OPTIONAL how many minutes to wait before scheduling new tasks 
+  batchtime: 3600                    # OPTIONAL how many minutes to wait before scheduling new tasks
   modules: "enterprise"              # OPTIONAL string or array of strings for modules to include in the variants
   stepback: false                    # OPTIONAL whether to run previous commits to pinpoint a failure's origin (off by default)
   tasks: ["t1", "t2"]                # task selector or array of selectors defining which tasks to run, same as any variant definition
@@ -537,7 +541,7 @@ Note that fields like "modules" and "stepback" that can be defined by axis value
 
 The `matrix_spec` and `exclude_spec` fields both take maps of `axis: axis_values` as their inputs.
 These axis values are combined to generate variants.
-The format itself is relatively flexible, and each axis can be defined as either 
+The format itself is relatively flexible, and each axis can be defined as either
 `axis_id: single_axis_value`, `axis_id: ["value1", "value2"]`, or `axis_id: ".tag .selector"`.
 That is, each axis can define a single value, array of values, or axis value tag selectors to show which values to contribute to the generated variants.
 The most common selector, however, will usually be `axis_id: "*"`, which selects all values for an axis.
@@ -617,7 +621,7 @@ More complicated selector strings are possible as well
 variant: ".windows !.debug !special_variant"
 ```
 
-You can also reference matrix variants with matrix definitions, just like `matrix_spec`. 
+You can also reference matrix variants with matrix definitions, just like `matrix_spec`.
 A single set of axis/axis value pairs will select one variant
 ```yaml
 variant:
@@ -626,7 +630,7 @@ variant:
 ```
 Multiple axis values will select multiple variants
 ```yaml
-variant: 
+variant:
   os: ".unix" # tag selector
   size: ["large", "small"]
 ```
@@ -707,5 +711,4 @@ Full gitignore syntax is explained [here](https://git-scm.com/docs/gitignore). I
 ### The Power of YAML
 YAML as a format has some built-in support for defining variables and using them.
 You might notice the use of node anchors and references in some of our project code.
-For a quick example, see: http://en.wikipedia.org/wiki/YAML#Reference 
-
+For a quick example, see: http://en.wikipedia.org/wiki/YAML#Reference
