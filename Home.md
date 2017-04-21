@@ -37,7 +37,7 @@ If you can do it in a shell script, you can run it with Evergreen.
 Internally, MongoDB uses Evergreen for everything from testing the main server, to compiling our documentation, creating Amazon AMIs, and even testing Evergreen itself.
 Projects are defined with simple yaml config files, see [here](https://github.com/evergreen-ci/sample/blob/master/evergreen.yml) for an example.
 
-###How It Works
+### How It Works
 Evergreen monitors a set of github repositories, waiting for new commits.
 When a new commit comes in or enough time has passed, Evergreen schedules builds for different variants (different OSes, compile flags, etc).
 Once builds are scheduled, an internal heuristic decides how many cloud machines to allocate in order to get tests done as quickly and cheaply as possible.
