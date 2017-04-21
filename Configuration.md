@@ -16,7 +16,7 @@ db: "evg"
 `db`: the MongoDB database to use.
 
 ##### Cloud Providers
-######AWS
+###### AWS
 Amazon services require a an ID and a Secret, which are set as follows:
 ```yaml
 providers:
