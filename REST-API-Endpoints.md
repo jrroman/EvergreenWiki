@@ -17,6 +17,7 @@ Evergreen REST API v1
   - [Retrieve info on a particular task](#retrieve-info-on-a-particular-task)
   - [Retrieve the status of a particular task](#retrieve-the-status-of-a-particular-task)
   - [Retrieve the most recent revisions for a particular kind of task](#retrieve-the-most-recent-revisions-for-a-particular-kind-of-task)
+  - [Retrieve test history for a given set of tests or tasks](#retrieve-test-history-for-a-given-task-or-test)
 
 #### A note on authentication
 
@@ -30,7 +31,7 @@ Authenticated REST access requires setting two headers, `Auth-Username` and `Api
 ##### Example
 
 ```bash
-    curl -H Auth-Username:my.name -H Api-Key:21312mykey12312 https://localhost:9090/rest/v1/projects/my_private_project
+    curl -H Auth-Username:my.name -H Api-Key:21312mykey12312 https://evergreen.example.com/rest/v1/projects/my_private_project
 ```
 #### Retrieve a list of active project IDs
 
@@ -62,7 +63,7 @@ _Note that you must use API credentials to see private projects._
 
 ##### Request
 
-    curl https://localhost:9090/rest/v1/projects/mci
+    curl https://evergreen.example.com/rest/v1/projects/mci
 
 ##### Response
 
@@ -91,7 +92,7 @@ _Note that you must use API credentials to see private projects._
 
 ##### Request
 
-    curl https://localhost:9090/rest/v1/projects/mongodb-mongo-master/versions
+    curl https://evergreen.example.com/rest/v1/projects/mongodb-mongo-master/versions
 
 ##### Response
 
@@ -143,7 +144,7 @@ At least one variant is required.
 
 ##### Request
 
-    curl https://localhost:9090/rest/v1/projects/mongodb-mongo-master/last_green?rhel55=1&rhel62=1
+    curl https://evergreen.example.com/rest/v1/projects/mongodb-mongo-master/last_green?rhel55=1&rhel62=1
 
 ##### Response
 
@@ -165,7 +166,7 @@ _Note that the revision is equivalent to the git hash._
 
 ##### Request
 
-    curl https://localhost:9090/rest/v1/projects/mongodb-mongo-master/revisions/d477da53e119b207de45880434ccef1e47084652
+    curl https://evergreen.example.com/rest/v1/projects/mongodb-mongo-master/revisions/d477da53e119b207de45880434ccef1e47084652
 
 ##### Response
 
@@ -211,7 +212,7 @@ _Note that the revision is equivalent to the git hash._
       
 ##### Request
 
-    curl https://localhost:9090/rest/v1/versions/mongodb_mongo_master_d477da53e119b207de45880434ccef1e47084652
+    curl https://evergreen.example.com/rest/v1/versions/mongodb_mongo_master_d477da53e119b207de45880434ccef1e47084652
 
 ##### Response
 
@@ -257,7 +258,7 @@ _Note that the revision is equivalent to the git hash._
 
 ##### Request
 
-    curl https://localhost:9090/rest/v1/versions/mongodb_mongo_master_d477da53e119b207de45880434ccef1e47084652/config
+    curl https://evergreen.example.com/rest/v1/versions/mongodb_mongo_master_d477da53e119b207de45880434ccef1e47084652/config
 
 ##### Response
 
@@ -277,7 +278,7 @@ activated | bool | **Optional**. Activates the version when `true`, and deactiva
 
 ##### Request
 
-    curl -X PATCH https://localhost:9090/rest/v1/versions/mongodb_mongo_master_d477da53e119b207de45880434ccef1e47084652 -d '{"activated": false}' -H Auth-Username:my.name -H Api-Key:21312mykey12312
+    curl -X PATCH https://evergreen.example.com/rest/v1/versions/mongodb_mongo_master_d477da53e119b207de45880434ccef1e47084652 -d '{"activated": false}' -H Auth-Username:my.name -H Api-Key:21312mykey12312
 
 ##### Response
 
@@ -330,7 +331,7 @@ groupby | string | tasks   | Determines how to key into the task status. For `ta
 
 ##### Request
 
-    curl https://localhost:9090/rest/v1/versions/mongodb_mongo_master_d477da53e119b207de45880434ccef1e47084652/status
+    curl https://evergreen.example.com/rest/v1/versions/mongodb_mongo_master_d477da53e119b207de45880434ccef1e47084652/status
 
 ##### Response
 
@@ -355,7 +356,7 @@ groupby | string | tasks   | Determines how to key into the task status. For `ta
 
 ##### Request
 
-    curl https://localhost:9090/rest/v1/versions/mongodb_mongo_master_d477da53e119b207de45880434ccef1e47084652/status?groupby=builds
+    curl https://evergreen.example.com/rest/v1/versions/mongodb_mongo_master_d477da53e119b207de45880434ccef1e47084652/status?groupby=builds
 
 ##### Response
 
@@ -384,7 +385,7 @@ groupby | string | tasks   | Determines how to key into the task status. For `ta
 
 ##### Request
 
-    curl https://localhost:9090/rest/v1/builds/mongodb_mongo_master_linux_64_d477da53e119b207de45880434ccef1e47084652_14_07_22_17_02_09
+    curl https://evergreen.example.com/rest/v1/builds/mongodb_mongo_master_linux_64_d477da53e119b207de45880434ccef1e47084652_14_07_22_17_02_09
 
 ##### Response
 
@@ -425,7 +426,7 @@ groupby | string | tasks   | Determines how to key into the task status. For `ta
 
 ##### Request
 
-    curl https://localhost:9090/rest/v1/builds/mongodb_mongo_master_linux_64_d477da53e119b207de45880434ccef1e47084652_14_07_22_17_02_09/status
+    curl https://evergreen.example.com/rest/v1/builds/mongodb_mongo_master_linux_64_d477da53e119b207de45880434ccef1e47084652_14_07_22_17_02_09/status
 
 ##### Response
 
@@ -451,7 +452,7 @@ groupby | string | tasks   | Determines how to key into the task status. For `ta
 
 ##### Request
 
-    curl https://localhost:9090/rest/v1/tasks/mongodb_mongo_master_linux_64_7ffac7f351b80f84589349e44693a94d5cc5e14c_14_07_22_13_27_06_aggregation_linux_64
+    curl https://evergreen.example.com/rest/v1/tasks/mongodb_mongo_master_linux_64_7ffac7f351b80f84589349e44693a94d5cc5e14c_14_07_22_13_27_06_aggregation_linux_64
 
 ##### Response
 
@@ -513,7 +514,7 @@ groupby | string | tasks   | Determines how to key into the task status. For `ta
 
 ##### Request
 
-    curl https://localhost:9090/rest/v1/tasks/mongodb_mongo_master_linux_64_7ffac7f351b80f84589349e44693a94d5cc5e14c_14_07_22_13_27_06_aggregation_linux_64/status
+    curl https://evergreen.example.com//rest/v1/tasks/mongodb_mongo_master_linux_64_7ffac7f351b80f84589349e44693a94d5cc5e14c_14_07_22_13_27_06_aggregation_linux_64/status
 
 ##### Response
 
@@ -553,7 +554,7 @@ project | string | The project name.
 
 ##### Request
 
-    curl https://localhost:9090/rest/v1/tasks/compile/history?project=sample
+    curl https://evergreen.example.com//rest/v1/tasks/compile/history?project=sample
 
 ##### Response
 
@@ -606,4 +607,162 @@ project | string | The project name.
     "After": true
   }
 }
+```
+#### Retrieve test history for a given task or test
+
+  ``` GET /rest/v1/projects/{project_id}/test_history ```
+
+##### Parameters
+
+Name    | Type   | Description
+------- | ------ | -----------
+tasks | comma separated strings | List of task display names.  If this is not specified, there must be a set of testNames provided. The default is then all tasks that have the given test name. 
+tests | comma separated strings | List of names of test files. This is the whole path to the test file and not just the basename. If this is not provided, there must be tasks provided as a query parameter. Default return all tests for the tasks that are given in the parameters.
+variants | comma separated strings | List of build variants to filter on. Default all.
+taskStatuses| comma separated strings | This is the overall status of the task. Options are "success", "failed", "sysfail", "timeout". Default "failed".
+testStatuses| comma separated strings | This is the status of a single test. Options are "pass", "fail", "skip", and "timeout".
+beforeRevision| string | **Optional** Inclusive, full 40 character git revision to find results before that revision.
+afterRevision| string | **Optional** Exclusive, full 40 character git revision to find results after that revision. 
+beforeDate | string in format "YYYY-MM-DDTHH:MM:SSZ"| **Optional** Inclusive, retrieve test history of tests that started before the date. 
+afterDate| string in format "YYYY-MM-DDTHH:MM:SSZ" | **Optional** Inclusive, retrieve test history of tests that started after the date. 
+sort | string | Options are "latest" or "earliest". Default "latest". Sort is on chronological order of revisions and alphabetical test file name. 
+limit | int | Default 20. Number of results for a given revision returned. 
+
+##### Request
+ ``` curl https://evergreen.example.com/rest/v1/projects/mci/test_history?tasks=test-agent ```
+
+##### Response
+
+```json
+[
+  {
+    "test_file": "TestTaskSuccess",
+    "task_name": "test-agent",
+    "test_status": "fail",
+    "task_status": "failed",
+    "revision": "5a283e52e8317b963daef9a7c7b1074f60fbaba5",
+    "project": "mci",
+    "task_id": "mci_windows_test_agent_5a283e52e8317b963daef9a7c7b1074f60fbaba5_17_02_07_22_08_51",
+    "variant": "windows",
+    "start_time": "2017-02-07T17:13:58-05:00",
+    "end_time": "2017-02-07T17:13:58-05:00",
+    "duration": 0,
+    "execution": 0,
+    "url": "http://localhost:9090//test_log/589a46af3ff1220ba6037886",
+    "url_raw": ""
+  },
+  {
+    "test_file": "TestPatchTask",
+    "task_name": "test-agent",
+    "test_status": "fail",
+    "task_status": "failed",
+    "revision": "5a283e52e8317b963daef9a7c7b1074f60fbaba5",
+    "project": "mci",
+    "task_id": "mci_osx_test_agent_5a283e52e8317b963daef9a7c7b1074f60fbaba5_17_02_07_22_08_51",
+    "variant": "osx",
+    "start_time": "2017-02-08T00:54:02-05:00",
+    "end_time": "2017-02-08T00:54:08-05:00",
+    "duration": 6000000000,
+    "execution": 0,
+    "url": "http://localhost:9090//test_log/589ab2823ff122013a00435d",
+    "url_raw": ""
+  },
+  {
+    "test_file": "TestPatchTask",
+    "task_name": "test-agent",
+    "test_status": "fail",
+    "task_status": "failed",
+    "revision": "5a283e52e8317b963daef9a7c7b1074f60fbaba5",
+    "project": "mci",
+    "task_id": "mci_rhel62_test_agent_5a283e52e8317b963daef9a7c7b1074f60fbaba5_17_02_07_22_08_51",
+    "variant": "rhel62",
+    "start_time": "2017-02-07T17:14:19-05:00",
+    "end_time": "2017-02-07T17:14:26-05:00",
+    "duration": 7000000000,
+    "execution": 0,
+    "url": "http://localhost:9090//test_log/589a46c33ff1220ba603796a",
+    "url_raw": ""
+  },
+  {
+    "test_file": "TestAgentDebugHandler",
+    "task_name": "test-agent",
+    "test_status": "fail",
+    "task_status": "failed",
+    "revision": "5a283e52e8317b963daef9a7c7b1074f60fbaba5",
+    "project": "mci",
+    "task_id": "mci_osx_test_agent_5a283e52e8317b963daef9a7c7b1074f60fbaba5_17_02_07_22_08_51",
+    "variant": "osx",
+    "start_time": "2017-02-08T00:54:02-05:00",
+    "end_time": "2017-02-08T00:54:04-05:00",
+    "duration": 2000000000,
+    "execution": 0,
+    "url": "http://localhost:9090//test_log/589ab2823ff122013a00435d",
+    "url_raw": ""
+  },
+  {
+    "test_file": "TestAgentDebugHandler",
+    "task_name": "test-agent",
+    "test_status": "fail",
+    "task_status": "failed",
+    "revision": "5a283e52e8317b963daef9a7c7b1074f60fbaba5",
+    "project": "mci",
+    "task_id": "mci_rhel62_test_agent_5a283e52e8317b963daef9a7c7b1074f60fbaba5_17_02_07_22_08_51",
+    "variant": "rhel62",
+    "start_time": "2017-02-07T17:14:19-05:00",
+    "end_time": "2017-02-07T17:14:21-05:00",
+    "duration": 2000000000,
+    "execution": 0,
+    "url": "http://localhost:9090//test_log/589a46c33ff1220ba603796a",
+    "url_raw": ""
+  },
+  {
+    "test_file": "TestAgentDebugHandler",
+    "task_name": "test-agent",
+    "test_status": "fail",
+    "task_status": "failed",
+    "revision": "5a283e52e8317b963daef9a7c7b1074f60fbaba5",
+    "project": "mci",
+    "task_id": "mci_rhel62_gccgo_test_agent_5a283e52e8317b963daef9a7c7b1074f60fbaba5_17_02_07_22_08_51",
+    "variant": "rhel62-gccgo",
+    "start_time": "2017-02-07T17:14:22-05:00",
+    "end_time": "2017-02-07T17:14:24-05:00",
+    "duration": 2000000000,
+    "execution": 0,
+    "url": "http://localhost:9090//test_log/589a46c63ff1220ba603796e",
+    "url_raw": ""
+  },
+  {
+    "test_file": "TestAgentDebugHandler",
+    "task_name": "test-agent",
+    "test_status": "fail",
+    "task_status": "failed",
+    "revision": "5a283e52e8317b963daef9a7c7b1074f60fbaba5",
+    "project": "mci",
+    "task_id": "mci_rhel71_power_test_agent_5a283e52e8317b963daef9a7c7b1074f60fbaba5_17_02_07_22_08_51",
+    "variant": "rhel71-power",
+    "start_time": "2017-02-07T22:37:00-05:00",
+    "end_time": "2017-02-07T22:37:02-05:00",
+    "duration": 2000000000,
+    "execution": 0,
+    "url": "http://localhost:9090//test_log/589a92b33ff1220ba6054881",
+    "url_raw": ""
+  },
+  {
+    "test_file": "TestAgentDebugHandler",
+    "task_name": "test-agent",
+    "test_status": "fail",
+    "task_status": "failed",
+    "revision": "5a283e52e8317b963daef9a7c7b1074f60fbaba5",
+    "project": "mci",
+    "task_id": "mci_rhel71_s390x_test_agent_5a283e52e8317b963daef9a7c7b1074f60fbaba5_17_02_07_22_08_51",
+    "variant": "rhel71-s390x",
+    "start_time": "2017-02-07T19:51:35-05:00",
+    "end_time": "2017-02-07T19:51:37-05:00",
+    "duration": 2000000000,
+    "execution": 0,
+    "url": "http://localhost:9090//test_log/589a6b9f3ff1220ba604f806",
+    "url_raw": ""
+  }
+]
+
 ```
