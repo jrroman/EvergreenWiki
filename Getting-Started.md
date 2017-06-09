@@ -6,8 +6,12 @@ Rest assured that once it is up and running, there will be very little configura
 ## Requirements
 
 ##### Install Go From Source
-One of Evergreen's most defining features is its reliance on Go's cross compilation support.
-In the current release, Go 1.4, cross compilation requires installing Go from source, which you can do by following the instructions [here](https://golang.org/doc/install/source).
+One of Evergreen's most defining features is its reliance on Go's cross compilation support. If you are using a version of Go previous to 1.5 you will have to comile from source, please see below: 
+
+Go 1.4, cross compilation requires installing Go from source, which you can do by following the instructions [here](https://golang.org/doc/install/source).
+
+Go versions 1.5 and up do not need to be compiled from source to use the cross compilation features. In these newer versions of Go you may set `GOOS` (operating system) and `GOARCH` (architecture) variables. See below example:
+`GOOS=linux GOARCH=amd64 go build path/to/files.go`
 
 #### Install MongoDB
 Evergreen was built by the developers of MongoDB, so it's no surprise that Evergreen relies on MongoDB for all of its back-end storage needs.
@@ -20,12 +24,12 @@ We rely on internal vendoring for all of our packages, so there's no need to use
 
 #### Build
 
-Compiling the main Evergreen processes is done by simply running `./build.sh`, which will compile them into the `bin` directory.
+Compiling the main Evergreen processes is done by simply running `make build`, which will compile them into the `bin` directory.
 
 Cross-compiling the agent is a little trickier. 
 Cross-compilation requires building Go from source (see above).
-You must then run `go run vendor/src/github.com/laher/goxc/goxc.go -t` to set up your tool chain before any cross compilation can take place.
-After this is done, run `./build_agent.sh`, which will compile the agent for all of our supported platforms.
+You must then run `go run vendor/github.com/laher/goxc/goxc.go -t` to set up your tool chain before any cross compilation can take place.
+After this is done, run `make agents clis`, which will compile the agent for all of our supported platforms.
 
 
 ## Configure and Run
@@ -85,7 +89,7 @@ in the root of the config file.
 If the `superusers` field does not exist, all logged in users will have superuser privileges.
 
 #### The Evergreen Processes
-Running `build.sh` will generate binaries for `evergreen_ui_server`, `evergreen_api_server`, and `evergreen_runner`. 
+Running `make build` will generate binaries for `evergreen_ui_server`, `evergreen_api_server`, and `evergreen_runner`. 
 Once your config file is in order, you start these processes *from the root of the evergreen git repository* with
 ```bash
 export EVGHOME=`pwd`
